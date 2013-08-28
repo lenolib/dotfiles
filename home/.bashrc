@@ -123,3 +123,4 @@ alias homeshick="$HOME/.homesick/repos/homeshick/home/.homeshick"
 
 alias mosh="mosh --server='mosh-server new -l LC_ALL=en_US.UTF-8'"
 
+ulimit -c unlimited
