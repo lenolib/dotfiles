@@ -1,3 +1,51 @@
 [submodule "home/.vim/bundle/fugitive"]
 	path = home/.vim/bundle/fugitive
 	url = http://github.com/tpope/vim-fugitive.git
+[submodule "home/.vim/bundle/nerdtree"]
+	path = home/.vim/bundle/nerdtree
+	url = https://github.com/scrooloose/nerdtree.git
+[submodule "home/.vim/bundle/snipmate"]
+	path = home/.vim/bundle/snipmate
+	url = https://github.com/msanders/snipmate.vim.git
+[submodule "home/.vim/bundle/surround"]
+	path = home/.vim/bundle/surround
+	url = https://github.com/tpope/vim-surround.git
+[submodule "home/.vim/bundle/git"]
+	path = home/.vim/bundle/git
+	url = https://github.com/tpope/vim-git.git
+[submodule "home/.vim/bundle/supertab"]
+	path = home/.vim/bundle/supertab
+	url = https://github.com/ervandew/supertab.git
+[submodule "home/.vim/bundle/minibufexpl"]
+	path = home/.vim/bundle/minibufexpl
+	url = https://github.com/sontek/minibufexpl.vim.git
+[submodule "home/.vim/bundle/command-t"]
+	path = home/.vim/bundle/command-t
+	url = https://github.com/wincent/Command-T.git
+[submodule "home/.vim/bundle/pyflakes-pathogen"]
+	path = home/.vim/bundle/pyflakes-pathogen
+	url = https://github.com/mitechie/pyflakes-pathogen.git
+[submodule "home/.vim/bundle/ack"]
+	path = home/.vim/bundle/ack
+	url = https://github.com/mileszs/ack.vim.git
+[submodule "home/.vim/bundle/gundo"]
+	path = home/.vim/bundle/gundo
+	url = https://github.com/sjl/gundo.vim.git
+[submodule "home/.vim/bundle/pydoc"]
+	path = home/.vim/bundle/pydoc
+	url = https://github.com/fs111/pydoc.vim.git
+[submodule "home/.vim/bundle/pep8"]
+	path = home/.vim/bundle/pep8
+	url = https://github.com/vim-scripts/pep8.git
+[submodule "home/.vim/bundle/py.test"]
+	path = home/.vim/bundle/py.test
+	url = https://github.com/alfredodeza/pytest.vim.git
+[submodule "home/.vim/bundle/makegreen"]
+	path = home/.vim/bundle/makegreen
+	url = https://github.com/reinh/vim-makegreen
+[submodule "home/.vim/bundle/tasklist"]
+	path = home/.vim/bundle/tasklist
+	url = https://github.com/vim-scripts/TaskList.vim.git
+[submodule "home/.vim/bundle/ropevim"]
+	path = home/.vim/bundle/ropevim
+	url = https://github.com/sontek/rope-vim.git
