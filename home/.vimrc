@@ -31,10 +31,13 @@ map <leader>r :RopeRename<CR>
 nmap <leader>a <Esc>:Ack! 
 
 ""Display current branch in statusline
-%{fugitive#statusline()}
+"set statusline = 
+"set statusline += %{fugitive#statusline()}
 
-Vim doesn't realize that you are in a virtualenv so it wont give you code completion for libraries only installed there. Add the following script to your ~/.vimrc to fix it:
 
+""Vim doesn't realize that you are in a virtualenv so it wont 
+""give you code completion for libraries only installed there. 
+""Add the following script to your ~/.vimrc to fix it:
 " Add the virtualenv's site-packages to vim path
 py << EOF
 import os.path
@@ -50,4 +53,4 @@ EOF
 
 ""--------END sontek config tips-----------
 
-
+set number
