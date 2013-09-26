@@ -91,7 +91,7 @@ alias gs='git status'
 alias gl='git log'
 alias gll='git pull'
 alias gpu='git push'
-
+alias gd='git diff'
 
 
 # Add an "alert" alias for long running commands.  Use like so:
@@ -120,7 +120,11 @@ GIT_REMOTE_BRANCH="git rev-parse --symbolic-full-name --abbrev-ref @{u} 2> /dev/
 PS1="\[\033[0;37m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[0;31m\]\h'; else echo '\[\033[1;33m\]\u\[\033[0;37m\]@\[\033[1;96m\]\h'; fi)\[\033[0;37m\]]\342\224\200[\[\033[1;32m\]\w\[\033[0;37m\]]\342\224\200[\[\033[1;31m\]\$(${GIT_BRANCH})\[\033[0;37m\]->\[\033[1;31m\]\$(${GIT_REMOTE_BRANCH})\[\033[0;37m\]]\342\224\200\n\[\033[0;37m\]\342\224\224\342\225\274 \[\033[0m\]"
 
 alias homeshick="$HOME/.homesick/repos/homeshick/home/.homeshick"
-
 alias mosh="mosh --server='mosh-server new -l LC_ALL=en_US.UTF-8'"
+alias sap="sudo apt-get"
+alias sapi="sudo apt-get install"
+alias sapu="sudo apt-get update"
 
 ulimit -c unlimited
+alias rm_trail_wp="sed --in-place 's/[[:space:]]\+$//'"
+# source ~/.bash_alias_completion
