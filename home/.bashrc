@@ -92,7 +92,7 @@ alias gl='git log'
 alias gll='git pull'
 alias gpu='git push'
 alias gd='git diff'
-
+alias gsl='git stash list'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
