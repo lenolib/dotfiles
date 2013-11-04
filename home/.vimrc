@@ -147,4 +147,4 @@ au BufNewFile *.py,*.pyw,*.c,*.h set fileformat=unix
 " Solarized stuff
 syntax enable " necessary?
 set background=dark
-colorscheme solarized
+" colorscheme solarized
