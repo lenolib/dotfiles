@@ -93,6 +93,7 @@ alias gll='git pull'
 alias gpu='git push'
 alias gd='git diff'
 alias gsl='git stash list'
+alias gch='git checkout'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -124,7 +125,13 @@ alias mosh="mosh --server='mosh-server new -l LC_ALL=en_US.UTF-8'"
 alias sap="sudo apt-get"
 alias sapi="sudo apt-get install"
 alias sapu="sudo apt-get update"
+alias td="tmux detach"
+alias ta="tmux a"
+alias tls="tmux list-sessions"
+
 
 ulimit -c unlimited
 alias rm_trail_wp="sed --in-place 's/[[:space:]]\+$//'"
 # source ~/.bash_alias_completion
+
+source $HOME/.homesick/repos/homeshick/homeshick.sh
