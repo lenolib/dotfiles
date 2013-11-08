@@ -96,6 +96,7 @@ alias gsl='git stash list'
 alias gch='git checkout'
 alias gr='git remote'
 alias gb='git branch'
+alias gllum='git pull upstream'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
