@@ -15,8 +15,6 @@ keycode  25 = w W w W lstroke Lstroke lstroke Lstroke w W lstroke Lstroke
 keycode  27 = r R r R registered registered registered registered r R registered registered
 keycode  28 = t T t T thorn THORN thorn THORN t T thorn THORN
 
-keycode  34 = aring Aring aring Aring dead_diaeresis dead_abovering dead_diaeresis dead_abovering aring Aring dead_diaeresis dead_abovering
-keycode  35 = dead_diaeresis dead_circumflex dead_diaeresis dead_circumflex dead_tilde dead_caron dead_tilde dead_caron dead_diaeresis dead_circumflex dead_tilde dead_caron
 keycode  36 = Return NoSymbol Return NoSymbol Return
 keycode  37 = Control_L NoSymbol Control_L NoSymbol Control_L
 keycode  38 = a A a A ordfeminine masculine ordfeminine masculine a A ordfeminine masculine
@@ -222,7 +220,8 @@ keycode  16 = 7 slash braceleft slash braceleft division 1 2 3 4 5 6
 keycode  17 = 8 parenleft BackSpace parenleft bracketleft 1 2 3 4 5 6
 keycode  18 = 9 parenright Delete parenright bracketright 1 2 3 4 5 6
 keycode  19 = 0 equal braceright equal braceright 1 2 3 4 5 6
-
+keycode  34 = aring Aring asciicircum Aring dead_diaeresis dead_abovering dead_diaeresis dead_abovering aring Aring dead_diaeresis dead_abovering
+keycode  35 = dead_diaeresis dead_circumflex asciitilde dead_tilde dead_diaeresis dead_circumflex dead_tilde dead_caron dead_tilde 
 keycode  26 = e E Return 1 2 3 4 5 6
 keycode  43 = h H parenleft bracketleft 2 3 4 5 6
 keycode  47 = odiaeresis Odiaeresis parenright bracketright 2 3 4 5 6
@@ -241,7 +240,7 @@ keycode  61 = minus underscore bar 1 2 3 4 5 6 7
 keycode  57 = n N less less 1 2 3 4 5 6
 keycode  58 = m M greater greater 1 2 3 4 5 6
 
-keycode  48 = adiaeresis Adiaeresis Return 1 2 3 4 5 6
+keycode  48 = adiaeresis Adiaeresis slash 1 2 3 4 5 6
 
 keycode  50 = Shift_L NoSymbol Shift_L NoSymbol Shift_L
 
