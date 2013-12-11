@@ -464,6 +464,3 @@ c = get_config()
 # the right interpreter.
 # c.ScriptMagics.script_paths = {}
 
-from datetime import datetime, timedelta; from utils.base import decomp; import
-pandas as pd; import time; import numpy as np; from matplotlib.pyplot import
-plot, show, tight_layout, plot_date; import matplotlib.pyplot as plt
