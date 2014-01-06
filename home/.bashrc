@@ -84,7 +84,8 @@ fi
 # some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
-alias l='ls -CF'
+alias l='ls -lF'
+alias lsize='ls -lahr --sort=size'
 
 # git aliases
 alias gs='git status'
