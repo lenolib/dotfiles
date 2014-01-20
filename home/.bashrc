@@ -100,6 +100,9 @@ alias gr='git remote'
 alias gb='git branch'
 alias gllu='git pull upstream'
 alias gllum='git pull upstream master'
+alias gap='git add --patch'
+alias gcm='git commit -m'
+alias gcam='git commit -am'
 
 
 # Add an "alert" alias for long running commands.  Use like so:
