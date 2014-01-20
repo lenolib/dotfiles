@@ -216,36 +216,38 @@ keycode 253 =
 keycode 254 =
 keycode 255 =
 
-keycode  16 = 7 slash braceleft slash braceleft division 1 2 3 4 5 6 
-keycode  17 = 8 parenleft BackSpace parenleft bracketleft 1 2 3 4 5 6
-keycode  18 = 9 parenright Delete parenright bracketright 1 2 3 4 5 6
-keycode  19 = 0 equal braceright equal braceright 1 2 3 4 5 6
-keycode  34 = aring Aring asciicircum Aring dead_diaeresis dead_abovering dead_diaeresis dead_abovering aring Aring dead_diaeresis dead_abovering
-keycode  35 = dead_diaeresis dead_circumflex asciitilde dead_tilde dead_diaeresis dead_circumflex dead_tilde dead_caron dead_tilde 
+keycode  16 = 7 slash      braceleft  slash      braceleft    division 1 2 3 4 5 6 
+keycode  17 = 8 parenleft  BackSpace  parenleft  bracketleft  1 2 3 4 5 6
+keycode  18 = 9 parenright Delete     parenright bracketright 1 2 3 4 5 6
+keycode  19 = 0 equal      braceright equal      braceright   1 2 3 4 5 6
+
+keycode  34 = aring          Aring           asciicircum Aring      dead_diaeresis dead_abovering dead_diaeresis dead_abovering
+keycode  35 = dead_diaeresis dead_circumflex asciitilde  dead_tilde dead_diaeresis dead_circumflex dead_tilde
+
 keycode  26 = e E Return 1 2 3 4 5 6
 keycode  43 = h H parenleft bracketleft 2 3 4 5 6
-keycode  47 = odiaeresis Odiaeresis parenright bracketright 2 3 4 5 6
+keycode  47 = odiaeresis Odiaeresis parenright bracketright Return 1 2 3 4
 
-keycode  44 = j J Left Left 1 2 3 4 5 6
-keycode  45 = k K Down Down 1 2 3 4 5 6
-keycode  46 = l L Right Right 1 2 3 4 5 6
-keycode  31 = i I Up Up 1 2 3 4 5 6
-keycode  32 = o O End End 1 2 3 4 5 6
-keycode  30 = u U Home Home 1 2 3 4 5 6
+keycode  44 = j J Left    Left    Down 2 3 4 5 6
+keycode  45 = k K Down    Down    Up 2 3 4 5 6
+keycode  46 = l L Right   Right   Next 2 3 4 5 6
+keycode  31 = i I Up      Up      Prior 2 3 4 5 6
+keycode  32 = o O End     End     End 2 3 4 5 6
+keycode  30 = u U Home    Home    1 2 3 4 5 6
+keycode  57 = n N less    less    1 2 3 4 5 6
+keycode  58 = m M greater greater 1 2 3 4 5 6
 keycode  29 = y Y bracketleft 2 3 4 5 6
 keycode  33 = p P bracketright 2 3 4 5 6
 keycode  59 = comma semicolon Prior Prior 1 2 3 4 5 6
 keycode  60 = period colon Next Next 1 2 3 4 5 6
 keycode  61 = minus underscore bar 1 2 3 4 5 6 7
-keycode  57 = n N less less 1 2 3 4 5 6
-keycode  58 = m M greater greater 1 2 3 4 5 6
 
 keycode  48 = adiaeresis Adiaeresis slash 1 2 3 4 5 6
 
 keycode  50 = Shift_L NoSymbol Shift_L NoSymbol Shift_L
 
 keycode  64 = Alt_L Meta_L Alt_L Meta_L Alt_L Meta_L
-keycode  65 = space Escape space space 1 2 3 4 5 6
+keycode  65 = space Escape space space Return 2 3 4 5 6
 keycode  66 = Control_L Control_L Control_L Control_L Control_L Control_L
 
 keycode  92 = ISO_Level3_Shift NoSymbol ISO_Level3_Shift NoSymbol ISO_Level3_Shift
