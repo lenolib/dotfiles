@@ -1,7 +1,9 @@
 # Configuration file for ipython.
 
 c = get_config()
-
+c.InteractiveShellApp.exec_lines = [
+    'from __future__ import division, print_function'
+]
 #------------------------------------------------------------------------------
 # InteractiveShellApp configuration
 #------------------------------------------------------------------------------
