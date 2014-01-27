@@ -24,7 +24,6 @@ keycode  41 = f F f F dstroke ordfeminine dstroke ordfeminine f F dstroke ordfem
 keycode  42 = g G g G eng ENG eng ENG g G eng ENG
 keycode  49 = section onehalf section onehalf paragraph threequarters paragraph threequarters section onehalf paragraph threequarters
 
-keycode  51 = apostrophe asterisk apostrophe asterisk acute multiply acute multiply apostrophe asterisk acute multiply
 keycode  52 = z Z z Z guillemotleft less guillemotleft less z Z guillemotleft less
 keycode  53 = x X x X guillemotright greater guillemotright greater x X guillemotright greater
 keycode  54 = c C c C copyright copyright copyright copyright c C copyright copyright
@@ -243,6 +242,7 @@ keycode  60 = period colon Next Next 1 2 3 4 5 6
 keycode  61 = minus underscore bar 1 2 3 4 5 6 7
 
 keycode  48 = adiaeresis Adiaeresis slash 1 2 3 4 5 6
+keycode  51 = apostrophe asterisk grave acute 1 2 3 4
 
 keycode  50 = Shift_L NoSymbol Shift_L NoSymbol Shift_L
 
