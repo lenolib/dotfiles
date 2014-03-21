@@ -13,8 +13,8 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=91000
+HISTFILESIZE=912000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -84,15 +84,19 @@ fi
 # some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
+alias lh='ls -lFh'
 alias l='ls -lF'
-alias lsize='ls -lahr --sort=size'
+alias lsize='ls -lAhr --sort=size'
 
 # git aliases
 alias gs='git status'
 alias gl='git log'
+alias gf='git fetch'
+alias gfa='git fetch --all'
 alias gll='git pull'
 alias gpu='git push'
 alias gd='git diff'
+alias gds='git diff --stat'
 alias gsl='git stash list'
 alias gsa='git stash apply'
 alias gch='git checkout'
@@ -103,7 +107,7 @@ alias gllum='git pull upstream master'
 alias gap='git add --patch'
 alias gcm='git commit -m'
 alias gcam='git commit -am'
-
+alias glg='git log --graph --pretty="format:%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset"'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
