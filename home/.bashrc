@@ -102,6 +102,8 @@ alias gsa='git stash apply'
 alias gch='git checkout'
 alias gr='git remote'
 alias gb='git branch'
+alias gchum='git checkout upstream/master'
+alias gchm='git checkout master'
 alias gllu='git pull upstream'
 alias gllum='git pull upstream master'
 alias gap='git add --patch'
@@ -142,6 +144,8 @@ alias sapu="sudo apt-get update"
 alias td="tmux detach"
 alias ta="tmux a"
 alias tls="tmux list-sessions"
+alias f='cd ..'
+alias c='cd -'
 
 
 ulimit -c unlimited
