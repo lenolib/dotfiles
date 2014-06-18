@@ -6,12 +6,32 @@ import numpy as np
 import matplotlib as mpl
 from matplotlib.pyplot import plot, show, tight_layout, plot_date, gcf, gca
 import matplotlib.pyplot as plt
-from utils.base import decomp
+try:
+    from utils.base import decomp
+except ImportError:
+    print('Could not find utils, skippin decomp import')
 from functools import partial
 from operator import add, itemgetter
 from itertools import repeat, starmap
 import pprint
 pp = pprint.pprint
+values_as_their_types = lambda dictionary: dict(map(
+    lambda (k, v): (k, type(v)),
+    dictionary.iteritems(),
+))
+pd.set_option('display.width', None)  # Detect terminal width
+DF = pd.DataFrame
+S = pd.Series
+globals0 = values_as_their_types(globals())
+def gdiff():
+    new_globals = values_as_their_types(globals())
+    keydiff = set(new_globals.keys()) - set(globals0.keys())
+    diff = dict(filter(
+        lambda (k, v): k in keydiff,
+        new_globals.iteritems()
+    ))
+
+    return diff
 
 print(
     '\nImported in {}: \n'.format(__file__)+

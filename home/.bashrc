@@ -90,18 +90,18 @@ alias lsize='ls -lAhr --sort=size'
 
 # git aliases
 alias gs='git status'
-alias gl='git log'
-alias gf='git fetch'
+alias gl='git log '
+alias gf='git fetch '
 alias gfa='git fetch --all'
-alias gll='git pull'
-alias gpu='git push'
-alias gd='git diff'
+alias gll='git pull '
+alias gpu='git push '
+alias gd='git diff '
 alias gds='git diff --stat'
 alias gsl='git stash list'
 alias gsa='git stash apply'
-alias gch='git checkout'
-alias gr='git remote'
-alias gb='git branch'
+alias gch='git checkout '
+alias gr='git remote '
+alias gb='git branch '
 alias gchum='git checkout upstream/master'
 alias gchm='git checkout master'
 alias gllu='git pull upstream'
@@ -138,8 +138,8 @@ PS1="\[\033[0;37m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0
 
 alias homeshick="$HOME/.homesick/repos/homeshick/home/.homeshick"
 alias mosh="mosh --server='mosh-server new -l LC_ALL=en_US.UTF-8'"
-alias sap="sudo apt-get"
-alias sapi="sudo apt-get install"
+alias sap="sudo apt-get "
+alias sapi="sudo apt-get install "
 alias sapu="sudo apt-get update"
 alias td="tmux detach"
 alias ta="tmux a"
@@ -153,3 +153,4 @@ alias rm_trail_wp="sed --in-place 's/[[:space:]]\+$//'"
 # source ~/.bash_alias_completion
 
 source $HOME/.homesick/repos/homeshick/homeshick.sh
+
