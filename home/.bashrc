@@ -110,6 +110,7 @@ alias gap='git add --patch'
 alias gcm='git commit -m'
 alias gcam='git commit -am'
 alias glg='git log --graph --pretty="format:%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset"'
+alias gdh='git diff HEAD^'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -146,7 +147,10 @@ alias ta="tmux a"
 alias tls="tmux list-sessions"
 alias f='cd ..'
 alias c='cd -'
-
+alias xm='xmodmap modmap'
+alias rem='trash'
+alias op='xdg-open'
+alias cal='ncal -bM'
 
 ulimit -c unlimited
 alias rm_trail_wp="sed --in-place 's/[[:space:]]\+$//'"
