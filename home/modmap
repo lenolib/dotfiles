@@ -65,7 +65,6 @@ keycode 103 =
 keycode 104 = KP_Enter NoSymbol KP_Enter NoSymbol KP_Enter
 keycode 105 = Control_R NoSymbol Control_R NoSymbol Control_R
 keycode 106 = KP_Divide KP_Divide KP_Divide KP_Divide KP_Divide KP_Divide XF86Ungrab KP_Divide KP_Divide XF86Ungrab KP_Divide KP_Divide KP_Divide KP_Divide XF86Ungrab
-keycode 107 = Print Sys_Req Print Sys_Req Print Sys_Req
 
 keycode 109 = Linefeed NoSymbol Linefeed NoSymbol Linefeed
 keycode 110 = Home NoSymbol Home NoSymbol Home
@@ -262,6 +261,7 @@ keycode 101 = ISO_Level3_Shift
 keycode 102 = Mode_switch NoSymbol Mode_switch NoSymbol Mode_switch
 !ISO_Level3_Shift NoSymbol ISO_Level3_Shift NoSymbol
 
+keycode 107 = Super_L Super_L Print Sys_Req Print Sys_Req Print Sys_Req
 keycode 108 = ISO_Level3_Shift NoSymbol ISO_Level3_Shift NoSymbol ISO_Level3_Shift
 
 keycode 203 = Mode_switch NoSymbol Mode_switch NoSymbol Mode_switch

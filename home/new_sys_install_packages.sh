@@ -29,7 +29,7 @@ runsnakerun \
 nautilus-dropbox \
 gitg \
 indicator-multiload \
-
+indicator-cpufreq \
 
 # [Python stuff]
 sudo apt-get install \
@@ -56,6 +56,9 @@ sudo apt-get install ttf-mscorefonts-installer
 
 # [Replace nautilus with nemo]
 # http://www.webupd8.org/2013/10/install-nemo-with-unity-patches-and.html
+
+# cv for checking progress of basic unix commands
+# https://github.com/Xfennec/cv.git
 
 # [spotify]
 sudo sh -c 'echo "deb http://repository.spotify.com stable non-free" >> /etc/apt/sources.list.d/spotify.list'
