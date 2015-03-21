@@ -22,6 +22,9 @@ values_as_their_types = lambda dictionary: dict(map(
 pd.set_option('display.width', None)  # Detect terminal width
 DF = pd.DataFrame
 S = pd.Series
+fig = plt.figure
+dtim = datetime
+tdel = timedelta
 globals0 = values_as_their_types(globals())
 def gdiff():
     new_globals = values_as_their_types(globals())

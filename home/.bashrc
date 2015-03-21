@@ -91,12 +91,16 @@ alias lsize='ls -lAhr --sort=size'
 # git aliases
 alias gs='git status'
 alias gl='git log '
+alias glp='git log -p '
 alias gf='git fetch '
 alias gfa='git fetch --all'
+alias gfu='git fetch upstream'
 alias gll='git pull '
 alias gpu='git push '
 alias gd='git diff '
 alias gds='git diff --stat'
+alias gdum='git diff upstream/master'
+alias gfdum='git fetch upstream && git diff upstream/master'
 alias gsl='git stash list'
 alias gsa='git stash apply'
 alias gch='git checkout '
@@ -111,10 +115,14 @@ alias gcm='git commit -m'
 alias gcam='git commit -am'
 alias glg='git log --graph --pretty="format:%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset"'
 alias gdh='git diff HEAD^'
+alias gdc='git diff --cached'
+alias gsubll='git submodule foreach git pull origin master'
+alias gsubup='git submodule foreach --recursive git pull origin master && git submodule foreach --recursive git submodule update'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+alias lstree="ls -R | grep \":$\" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -160,6 +168,26 @@ ulimit -c unlimited
 alias rm_trail_wp="sed --in-place 's/[[:space:]]\+$//'"
 # source ~/.bash_alias_completion
 function clrdiff () { colordiff -y -W $(tput cols) "$@" | less -R;}
-
+function hgrep() { history | grep -P -- "$*"; }
 source $HOME/.homesick/repos/homeshick/homeshick.sh
 
+
+# The next line updates PATH for the Google Cloud SDK.
+source '/home/lennart/google-cloud-sdk/path.bash.inc'
+
+# The next line enables bash completion for gcloud.
+source '/home/lennart/google-cloud-sdk/completion.bash.inc'
+
+COL_RED='\033[1;31m'
+NOCOLOR='\033[0m'
+
+dirfunc () { 
+    orgpwd=`pwd`
+    echo ""
+    echo -e "$COL_RED---------> $2 <---------$NOCOLOR"
+    cd $2
+    eval $func $1
+    cd $orgpwd
+}
+
+eval 'map () {    if [ $# -le 1 ]; then      return ;   else      local f=$1 ;     local x=$2 ;     shift 2 ;     local xs=$@ ;      eval $f $x ;      map "$f" $xs ;   fi ; }'
