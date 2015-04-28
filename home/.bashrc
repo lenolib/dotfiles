@@ -156,6 +156,7 @@ alias tls="tmux list-sessions"
 alias f='cd ..'
 alias c='cd -'
 alias rem='trash'
+alias rempyc='find . -name "*.pyc" | xargs trash'
 alias op='xdg-open'
 alias cal='ncal -bM'
 
@@ -189,5 +190,15 @@ dirfunc () {
     eval $func $1
     cd $orgpwd
 }
+
+lsMB="--color=always | awk ""'"'BEGIN{mega=1048576} { sz = sprintf("%0.3f", $5/mega)} {gsub("^0*", "", sz)} {$1 = sprintf("%s %+3s %-8s %-8s %+9s M %+3s %+2s %+5s ", $1, $2, $3, $4, sz, $6, $7, $8)} {$2=""}{$3=""}{$4=""}{$5=""}{$6=""}{$7=""}{$8=""}{print}'"'"
+lsKB="--color=always | awk ""'"'BEGIN{kilo=1024} { sz = sprintf("%0.3f", $5/kilo)} {gsub("^0*", "", sz)} {$1 = sprintf("%s %+3s %-8s %-8s %+12s K %+3s %+2s %+5s ", $1, $2, $3, $4, sz, $6, $7, $8)} {$2=""}{$3=""}{$4=""}{$5=""}{$6=""}{$7=""}{$8=""}{print}'"'"
+alias lk="ls -l $lsKB"
+alias lks="ls -l -r --sort=size $lsKB"
+alias lksr="ls -l --sort=size $lsKB"
+alias lm="ls -l $lsMB"
+alias lms="ls -l -r --sort=size $lsMB"
+alias lmsr="ls -l --sort=size $lsMB"
+
 
 eval 'map () {    if [ $# -le 1 ]; then      return ;   else      local f=$1 ;     local x=$2 ;     shift 2 ;     local xs=$@ ;      eval $f $x ;      map "$f" $xs ;   fi ; }'
