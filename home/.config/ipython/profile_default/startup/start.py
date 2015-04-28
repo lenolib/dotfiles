@@ -14,21 +14,26 @@ from functools import partial
 from operator import add, itemgetter
 from itertools import repeat, starmap
 import pprint
+import blessings
+
+pd.set_option('display.width', None)  # Detect terminal width
+
 pp = pprint.pprint
+DF = pd.DataFrame
+stamp = pd.Timestamp
+S = pd.Series
+fig = plt.figure
+DT = datetime
+tdel = timedelta
+
 values_as_their_types = lambda dictionary: dict(map(
     lambda (k, v): (k, type(v)),
     dictionary.iteritems(),
 ))
-pd.set_option('display.width', None)  # Detect terminal width
-DF = pd.DataFrame
-S = pd.Series
-fig = plt.figure
-dtim = datetime
-tdel = timedelta
-globals0 = values_as_their_types(globals())
+_globals0 = values_as_their_types(globals())
 def gdiff():
     new_globals = values_as_their_types(globals())
-    keydiff = set(new_globals.keys()) - set(globals0.keys())
+    keydiff = set(new_globals.keys()) - set(_globals0.keys())
     diff = dict(filter(
         lambda (k, v): k in keydiff,
         new_globals.iteritems()
@@ -36,13 +41,54 @@ def gdiff():
 
     return diff
 
+def tabulate(words, termwidth=79, pad=3):
+    width = len(max(words, key=len)) + pad
+    ncols = max(1, termwidth // width)
+    nrows = (len(words) - 1) // ncols + 1
+    table = []
+    for i in xrange(nrows):
+        row = words[i::nrows]
+        format_str = ('%%-%ds' % width) * len(row)
+        table.append(format_str % tuple(row))
+    return '\n'.join(table)
+
+_imported = ['os', 'datetime', 'date', 'timedelta', 'pd', 'time', 'np', 'mpl',
+'plt', 'gcf', 'gca', 'tight_layout', 'show', 'plot', 'plot_date',
+'show', 'decomp', 'partial', 'add', 'itemgetter', 'repeat', 'starmap',
+'division', 'print func.'
+]
+
 print(
     '\nImported in {}: \n'.format(__file__)+
-    '--------\n'+
-    ' '.join([
-        'os', 'datetime', 'date', 'timedelta', 'pd', 'time', 'np', 'mpl',
-        'plt', 'gcf', 'gca', 'tight_layout', 'show', 'plot', 'plot_date',
-        'show', 'decomp', 'partial', 'add', 'itemgetter',
-        'repeat', 'starmap', '(division, print_function)'
-    ])
+      '--------\n'+ tabulate(_imported)
 )
+
+class ExecTimer(object):
+    def __init__(self, ip):
+        self.shell = ip
+        self.t_pre = time()
+        self.texc = 0
+        self.prev_texc = 0
+        self.term = blessings.Terminal()
+
+    def pre_execute(self):
+        self.t_pre = time()
+
+    def post_execute(self):
+        self.prev_texc = self.texc
+        self.texc = round(time() - self.t_pre, 6)
+        print(self.term.bold_blue(
+            '{} s'.format(self.texc).rjust(self.term.width - 1)
+        ))
+        # Only add or update user namespace var if it is safe to do so
+        if 'texc' not in self.shell.user_ns or \
+                self.shell.user_ns['texc'] == self.prev_texc:
+            self.shell.push({'texc': self.texc})
+        else:
+            pass
+
+    def register(self):
+        self.shell.events.register('pre_execute', self.pre_execute)
+        self.shell.events.register('post_execute', self.post_execute)
+
+ExecTimer(get_ipython()).register()
