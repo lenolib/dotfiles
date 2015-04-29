@@ -96,5 +96,5 @@ ExecTimer(get_ipython()).register()
 # Edit config here instead of in ipython_config.py
 get_ipython().run_line_magic(
     'config',
-    r"PromptManager.in_template = '{texc}\nIn[\\#]: '"
+    r"PromptManager.in_template = '{color.Green}{texc}\nIn[\\#]: '"
 )
