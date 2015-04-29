@@ -69,17 +69,17 @@ class ExecTimer(object):
         self.t_pre = time()
         self.texc = 0
         self.prev_texc = 0
-        self.term = blessings.Terminal()
 
     def pre_execute(self):
         self.t_pre = time()
 
     def post_execute(self):
         self.prev_texc = self.texc
-        self.texc = round(time() - self.t_pre, 6)
-        print(self.term.bold_blue(
-            '{} s'.format(self.texc).rjust(self.term.width - 1)
-        ))
+        elap = time() - self.t_pre
+        if elap >= 1:
+            self.texc = str(round(elap, 1)) + ' s'
+        else:
+            self.texc = str(int(round(elap*1000,0))) + ' ms'
         # Only add or update user namespace var if it is safe to do so
         if 'texc' not in self.shell.user_ns or \
                 self.shell.user_ns['texc'] == self.prev_texc:
@@ -92,3 +92,9 @@ class ExecTimer(object):
         self.shell.events.register('post_execute', self.post_execute)
 
 ExecTimer(get_ipython()).register()
+
+# Edit config here instead of in ipython_config.py
+get_ipython().run_line_magic(
+    'config',
+    r"PromptManager.in_template = '{texc}\nIn[\\#]: '"
+)

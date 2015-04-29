@@ -302,7 +302,7 @@ c.InteractiveShellApp.exec_lines = [
 # c.PromptManager.justify = True
 
 # Input prompt.  '\#' will be transformed to the prompt number
-# c.PromptManager.in_template = 'In [\\#]: '
+#c.PromptManager.in_template = '{texc}\nIn[\\#]: '
 
 # 
 # c.PromptManager.color_scheme = 'Linux'
