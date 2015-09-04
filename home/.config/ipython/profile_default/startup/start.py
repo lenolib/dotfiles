@@ -13,6 +13,7 @@ except ImportError:
 from functools import partial
 from operator import add, itemgetter
 from itertools import repeat, starmap
+from collections import Sequence
 import pprint
 import blessings
 
@@ -80,7 +81,30 @@ class ExecTimer(object):
             self.texc = str(round(elap, 1)) + ' s'
         else:
             self.texc = str(int(round(elap*1000,0))) + ' ms'
+        res = self.shell.user_ns['_']
+        restype = str(type(res))
+        if '<class ' in restype:
+            resdesc = restype[8:-2]
+        elif '<type ' in restype:
+            resdesc = restype[7:-2]
+        else:
+            resdesc = restype
+        is_safe_type = lambda obj: isinstance(
+            obj,
+            (tuple, list, dict, set, basestring, Sequence)
+        )
+        try:
+            if isinstance(res, type):
+                pass
+            elif hasattr(res, 'shape'):
+                resdesc = '{}, shape {}'.format(resdesc, res.shape)
+            elif is_safe_type(res) or (hasattr(res, '__len__')
+                                       and not hasattr(res, '__iter__')):
+                resdesc = '{}, len {}'.format(resdesc, len(res))
+        except Exception:
+            pass
         # Only add or update user namespace var if it is safe to do so
+        self.shell.push({'reslen':resdesc})
         if 'texc' not in self.shell.user_ns or \
                 self.shell.user_ns['texc'] == self.prev_texc:
             self.shell.push({'texc': self.texc})
@@ -96,5 +120,5 @@ ExecTimer(get_ipython()).register()
 # Edit config here instead of in ipython_config.py
 get_ipython().run_line_magic(
     'config',
-    r"PromptManager.in_template = '{color.Green}{texc}\nIn[\\#]: '"
+    r"PromptManager.in_template = '{color.Green}{texc}, {reslen}\nIn[\\#]: '"
 )

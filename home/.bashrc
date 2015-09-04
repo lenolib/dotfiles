@@ -81,14 +81,7 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias lh='ls -lFh'
-alias l='ls -lF'
-alias lsize='ls -lAhr --sort=size'
-
-# git aliases
+# Git aliases
 alias gs='git status'
 alias gl='git log '
 alias glp='git log -p '
@@ -119,10 +112,10 @@ alias gdc='git diff --cached'
 alias gsubll='git submodule foreach git pull origin master'
 alias gsubup='git submodule foreach --recursive git pull origin master && git submodule foreach --recursive git submodule update'
 
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
+
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 alias lstree="ls -R | grep \":$\" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
+alias grepr="grep -R"
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -145,43 +138,47 @@ GIT_REMOTE_BRANCH="git rev-parse --symbolic-full-name --abbrev-ref @{u} 2> /dev/
 
 PS1="\[\033[0;37m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[0;31m\]\h'; else echo '\[\033[1;33m\]\u\[\033[0;37m\]@\[\033[1;96m\]\h'; fi)\[\033[0;37m\]]\342\224\200[\[\033[1;32m\]\w\[\033[0;37m\]]\342\224\200[\[\033[1;31m\]\$(${GIT_BRANCH})\[\033[0;37m\]->\[\033[1;31m\]\$(${GIT_REMOTE_BRANCH})\[\033[0;37m\]]\342\224\200\n\[\033[0;37m\]\342\224\224\342\225\274 \[\033[0m\]"
 
-alias homeshick="$HOME/.homesick/repos/homeshick/home/.homeshick"
 alias mosh="mosh --server='mosh-server new -l LC_ALL=en_US.UTF-8'"
+alias rednose='nosetests --rednose'
+
+# Package manager aliases
 alias sap="sudo apt-get "
 alias sapi="sudo apt-get install "
 alias sapu="sudo apt-get update"
+# Tmux aliases
 alias td="tmux detach"
 alias ta="tmux a"
 alias tls="tmux list-sessions"
+# Shorthand for moving up file tree
 alias f='cd ..'
+# Shorthand for returning to previous directory
 alias c='cd -'
+
+# Shorthand for trash, which also of course can be used in place of rm -r
 alias rem='trash'
+# Trash all pyc-files in directory and sub-directories
 alias rempyc='find . -name "*.pyc" | xargs trash'
+# Open file from the command line with the program associated with the filetype
 alias op='xdg-open'
+# Display nice-looking calendar
 alias cal='ncal -bM'
 
-alias xm='xmodmap modmap && exit'
-alias xin='sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Synaptics Finger" 38, 43, 0 && sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Synaptics Area" 1500, 4600, 2400, 0 && sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Synaptics Noise Cancellation" 12, 12 && sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Synaptics Soft Button Areas" 3650, 4826, 0, 2400, 0, 0, 0, 0 && sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Device Accel Profile" 1'
-alias xbl='rfkill unblock all && sleep 1 &&  nmcli con up uuid da4fbe88-0999-4e31-bcfb-4e6848d69d0d && exit'
-alias xwl='nmcli con up id "LiPhone" && exit'
-
-ulimit -c unlimited
+# Command for stripping trailing white spaces in file
 alias rm_trail_wp="sed --in-place 's/[[:space:]]\+$//'"
-# source ~/.bash_alias_completion
-function clrdiff () { colordiff -y -W $(tput cols) "$@" | less -R;}
-function hgrep() { history | grep -P -- "$*"; }
-source $HOME/.homesick/repos/homeshick/homeshick.sh
-
-
-# The next line updates PATH for the Google Cloud SDK.
-source '/home/lennart/google-cloud-sdk/path.bash.inc'
-
-# The next line enables bash completion for gcloud.
-source '/home/lennart/google-cloud-sdk/completion.bash.inc'
 
 COL_RED='\033[1;31m'
 NOCOLOR='\033[0m'
 
+# source ~/.bash_alias_completion
+function clrdiff () { colordiff -y -W $(tput cols) "$@" | less -R;}
+function hgrep () { history | grep -P -- "$*"; }
+function outdated_reqs () {
+  echo "Checking installed outdated modules in $1 ..."
+  local modules=$(cat $1 | sed 's/==.*//' | sed -e '{:q;N;s/\n/\|/g;t q}')
+  pip list --outdated 2>/dev/null | grep -i -E $modules
+} 
+
+eval 'map () {    if [ $# -le 1 ]; then      return ;   else      local f=$1 ;     local x=$2 ;     shift 2 ;     local xs=$@ ;      eval $f $x ;      map "$f" $xs ;   fi ; }'
 dirfunc () { 
     orgpwd=`pwd`
     echo ""
@@ -191,6 +188,17 @@ dirfunc () {
     cd $orgpwd
 }
 
+
+# ls variation aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias lh='ls -lFh'
+alias l='ls -lF'
+alias lsize='ls -lAhr --sort=size'
+
+# ----------------------------------
+# Display ls filesizes with decimals
+# ----------------------------------
 lsMB="--color=always | awk ""'"'BEGIN{mega=1048576} { sz = sprintf("%0.3f", $5/mega)} {gsub("^0*", "", sz)} {$1 = sprintf("%s %+3s %-8s %-8s %+9s M %+3s %+2s %+5s ", $1, $2, $3, $4, sz, $6, $7, $8)} {$2=""}{$3=""}{$4=""}{$5=""}{$6=""}{$7=""}{$8=""}{print}'"'"
 lsKB="--color=always | awk ""'"'BEGIN{kilo=1024} { sz = sprintf("%0.3f", $5/kilo)} {gsub("^0*", "", sz)} {$1 = sprintf("%s %+3s %-8s %-8s %+12s K %+3s %+2s %+5s ", $1, $2, $3, $4, sz, $6, $7, $8)} {$2=""}{$3=""}{$4=""}{$5=""}{$6=""}{$7=""}{$8=""}{print}'"'"
 alias lk="ls -l $lsKB"
@@ -201,4 +209,20 @@ alias lms="ls -l -r --sort=size $lsMB"
 alias lmsr="ls -l --sort=size $lsMB"
 
 
-eval 'map () {    if [ $# -le 1 ]; then      return ;   else      local f=$1 ;     local x=$2 ;     shift 2 ;     local xs=$@ ;      eval $f $x ;      map "$f" $xs ;   fi ; }'
+# -----------------------------------------------------------------------------------
+# User-specific and more opinionated settings (delete if undesired or malfunctioning)
+# -----------------------------------------------------------------------------------
+export PATH=$PATH:$HOME/.local/bin
+source $HOME/.homesick/repos/homeshick/homeshick.sh
+ulimit -c unlimited
+
+# The next line updates PATH for the Google Cloud SDK.
+source "$HOME/google-cloud-sdk/path.bash.inc"
+# The next line enables bash completion for gcloud.
+source "$HOME/google-cloud-sdk/completion.bash.inc"
+
+alias xm='xmodmap modmap && exit'
+alias xin='sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Synaptics Finger" 38, 43, 0 && sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Synaptics Area" 1500, 4600, 2400, 0 && sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Synaptics Noise Cancellation" 12, 12 && sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Synaptics Soft Button Areas" 3650, 4826, 0, 2400, 0, 0, 0, 0 && sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Device Accel Profile" 1'
+alias xbl='rfkill unblock all && sleep 1 &&  nmcli con up uuid da4fbe88-0999-4e31-bcfb-4e6848d69d0d && exit'
+alias xwl='nmcli con up id "LiPhone" && exit'
+
