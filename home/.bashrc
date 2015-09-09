@@ -133,6 +133,9 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
+# Expand aliases by Ctrl+e
+bind '"\C-e": alias-expand-line'
+
 GIT_BRANCH="git rev-parse --abbrev-ref HEAD 2> /dev/null"
 GIT_REMOTE_BRANCH="git rev-parse --symbolic-full-name --abbrev-ref @{u} 2> /dev/null"
 
@@ -176,7 +179,10 @@ function outdated_reqs () {
   echo "Checking installed outdated modules in $1 ..."
   local modules=$(cat $1 | sed 's/==.*//' | sed -e '{:q;N;s/\n/\|/g;t q}')
   pip list --outdated 2>/dev/null | grep -i -E $modules
-} 
+}
+function sshrc () { /usr/bin/ssh -t $* "echo '`base64 -i ~/.bash_remote_rc`' | base64 --decode > /tmp/bash_remote_rc; bash --rcfile /tmp/bash_remote_rc" 
+}
+
 
 eval 'map () {    if [ $# -le 1 ]; then      return ;   else      local f=$1 ;     local x=$2 ;     shift 2 ;     local xs=$@ ;      eval $f $x ;      map "$f" $xs ;   fi ; }'
 dirfunc () { 
