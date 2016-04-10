@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta, date
 import os
+import sys
 import pandas as pd
 from time import time
 import numpy as np
@@ -11,11 +12,15 @@ try:
 except ImportError:
     print('Could not find utils, skippin decomp import')
 from functools import partial
-from operator import add, itemgetter
+from operator import add, itemgetter, attrgetter
 from itertools import repeat, starmap
 from collections import Sequence
 import pprint
 import blessings
+
+import pudb.ipython, pudb.lowlevel
+pudb.lowlevel.detect_encoding = lambda _: ('utf-8', [])
+
 
 pd.set_option('display.width', None)  # Detect terminal width
 
@@ -53,9 +58,9 @@ def tabulate(words, termwidth=79, pad=3):
         table.append(format_str % tuple(row))
     return '\n'.join(table)
 
-_imported = ['os', 'datetime', 'date', 'timedelta', 'pd', 'time', 'np', 'mpl',
+_imported = ['os', 'sys', 'datetime', 'date', 'timedelta', 'pd', 'time', 'np', 'mpl',
 'plt', 'gcf', 'gca', 'tight_layout', 'show', 'plot', 'plot_date',
-'show', 'decomp', 'partial', 'add', 'itemgetter', 'repeat', 'starmap',
+'show', 'decomp', 'partial', 'add', 'itemgetter', 'attrgetter', 'repeat', 'starmap',
 'division', 'print func.'
 ]
 

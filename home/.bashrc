@@ -53,6 +53,15 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+function macvendor () {
+    if ! [ -f "/tmp/oui.txt" ]; then
+        wget https://raw.githubusercontent.com/royhills/arp-scan/master/ieee-oui.txt -O /tmp/oui.txt
+    fi
+    OUI=$(echo ${1//[:.- ]/} | tr "[a-f]" "[A-F]" | egrep -o "[0-9A-F]{6}")
+    grep $OUI /usr/share/nmap/nmap-mac-prefixes
+}
+alias macv="python -c \"import sh, sys;fin=[ '\t'.join([ x[0], x[1], str( sh.grep( x[1].upper().replace(':','')[:6], '/tmp/oui.txt', _ok_code=[0,1] ) )[7:] ]) for x in [y.split() for y in sys.stdin.readlines() if y.count(':') > 4]]; print('\n'.join(fin).replace('\n\n', '\n'))\""
+
 if [ "$color_prompt" = yes ]; then
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
@@ -111,11 +120,13 @@ alias gdh='git diff HEAD^'
 alias gdc='git diff --cached'
 alias gsubll='git submodule foreach git pull origin master'
 alias gsubup='git submodule foreach --recursive git pull origin master && git submodule foreach --recursive git submodule update'
+alias gsu='git submodule update'
 
 
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 alias lstree="ls -R | grep \":$\" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
 alias grepr="grep -R"
+alias g="grep --color=auto"
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -143,6 +154,7 @@ PS1="\[\033[0;37m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0
 
 alias mosh="mosh --server='mosh-server new -l LC_ALL=en_US.UTF-8'"
 alias rednose='nosetests --rednose'
+alias p8="ping 8.8.8.8"
 
 # Package manager aliases
 alias sap="sudo apt-get "
@@ -156,6 +168,11 @@ alias tls="tmux list-sessions"
 alias f='cd ..'
 # Shorthand for returning to previous directory
 alias c='cd -'
+function d () { cd "$1"; ls -la; }
+
+# Shorthand for finding
+function hit () { find . -type f -iname "*$1*" | grep -i "$1"; }
+
 
 # Shorthand for trash, which also of course can be used in place of rm -r
 alias rem='trash'
@@ -218,17 +235,28 @@ alias lmsr="ls -l --sort=size $lsMB"
 # -----------------------------------------------------------------------------------
 # User-specific and more opinionated settings (delete if undesired or malfunctioning)
 # -----------------------------------------------------------------------------------
-export PATH=$PATH:$HOME/.local/bin
-source $HOME/.homesick/repos/homeshick/homeshick.sh
-ulimit -c unlimited
-
-# The next line updates PATH for the Google Cloud SDK.
-source "$HOME/google-cloud-sdk/path.bash.inc"
-# The next line enables bash completion for gcloud.
-source "$HOME/google-cloud-sdk/completion.bash.inc"
 
 alias xm='xmodmap modmap && exit'
 alias xin='sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Synaptics Finger" 38, 43, 0 && sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Synaptics Area" 1500, 4600, 2400, 0 && sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Synaptics Noise Cancellation" 12, 12 && sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Synaptics Soft Button Areas" 3650, 4826, 0, 2400, 0, 0, 0, 0 && sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Device Accel Profile" 1'
+
 alias xbl='rfkill unblock all && sleep 1 &&  nmcli con up uuid da4fbe88-0999-4e31-bcfb-4e6848d69d0d && exit'
 alias xwl='nmcli con up id "LiPhone" && exit'
 
+if [ -d $HOME/.homesick ]; then
+    source $HOME/.homesick/repos/homeshick/homeshick.sh
+fi
+
+function hostgrep () { cat ~/.ssh/config | grep -A1 $1 | grep -A1 $2 | grep -v '\-\-' | tee /dev/fd/2 | grep -v "Host " | awk '{print $2}'; }
+
+if [ -f "$HOME/google-cloud-sdk/path.bash.inc" ]; then
+    # The next line updates PATH for the Google Cloud SDK.
+    source "$HOME/google-cloud-sdk/path.bash.inc"
+    # The next line enables bash completion for gcloud.
+    source "$HOME/google-cloud-sdk/completion.bash.inc"
+fi
+
+export PATH=$PATH:$HOME/.local/bin:$HOME/opt/terraform
+
+ 
+alias xbl='rfkill unblock all && sleep 1 &&  nmcli con up uuid 1bf224a9-c005-4c6f-ae37-f5134504cc37 && exit'
+alias xwl='nmcli con up id "LiPhoneN" && exit'

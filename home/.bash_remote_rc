@@ -25,35 +25,45 @@ alias lms="ls -l -r --sort=size $lsMB"
 alias lmsr="ls -l --sort=size $lsMB"
 
 
-alias flu="fleetctl list-units"
-alias fluf="fleetctl list-unit-files"
-alias fj="fleetctl journal"
-alias flug="fleetctl list-units | grep"
+alias flu="fleetctl list-units | grep "
+alias fluf="fleetctl list-unit-files | grep "
+alias fj="fleetctl journal -lines=300"
+alias fjf="fleetctl journal -f -lines=300"
 alias fnr="fleetctl list-units | grep -v running"
+alias not_running="fleetctl list-units | grep -v running"
 alias flm="fleetctl list-machines"
 
 # all_machines [<role-filter>] [<command>]
 # Example: run command on all machiness disregarding of role (note douple-douple-quotation marks)
 #$> all_machines "" 'hostname; uptime; echo'  # Echo newline between each machine
-# This part sorts strings by length ============================================>                                                          <====
-function all_machines { command=${*:2}; fleetctl list-machines | grep "role=$1" | awk '{ print length, $0 }' | sort -n -s | cut -d" " -f2- | tee /dev/tty | cut -f2 | xargs -I{} bash -c "</dev/tty ssh {} $command"; }
+function all_machines {
+    command=${*:2}
+    # This part sorts strings by length ==============>                                                          <====
+    fleetctl list-machines | grep "role=" | grep "$1" | awk '{ print length, $0 }' | sort -n -s | cut -d" " -f2- | tee /dev/tty | cut -f2 | xargs -I{} bash -c "</dev/tty ssh {} '$command'"
+}
 export -f all_machines
  
 # List running dockers foreach "worker" (check load balance)
 alias docker_running='all_machines "" docker ps'
-alias docker_recent='all_machines "" docker ps | grep -v CONTAINER | grep -v days | grep -v months | grep -v hours'
+alias docker_recent='all_machines "" docker ps | grep -v CONTAINER | grep -v days | grep -v months | grep -v hours | grep -v weeks'
 
 
 # Jump into running container or run a command in running container
-function docker_run { command=${*:2}; fleetctl ssh $1 docker exec -it ${1/@/.} ${command:-bash}; } && export -f docker_run;
 # Usage:
 #$> docker_run predictdata-cumulator@0  # jumps into a console of the running container
 #$> docker_run predictdata-cumulator@0 hostname  # check hostname of running container
 #$> docker_run predictdata-cumulator@0 ls -lah  # run arbitrary command with parameters
-
+function docker_run {
+    command=${*:2}
+    fleetctl ssh $1 docker exec -it ${1/@/.} ${command:-bash}
+} 
+export -f docker_run
 
 # try on all machines (no guarantee that it will run)
-function try_all_machines { command=${*:2}; fleetctl list-machines | grep "role=$1" | sort -V | tee /dev/tty | cut -f2 | xargs -I{} bash -c "</dev/tty ssh {} $command || true"; }
+function try_all_machines {
+    command=${*:2}
+    fleetctl list-machines | grep "role=" | grep "$1" | sort -V | tee /dev/tty | cut -f2 | xargs -I{} bash -c "</dev/tty ssh {} $command || true"
+}
 export -f try_all_machines
 
 # Restart all failed instances (here for reference, copy/uncomment to use)
@@ -62,3 +72,6 @@ export -f try_all_machines
 # fleetctl list-machines | grep 'worker$' | awk -F. '{print $1}' | xargs -I{} timeout 30 fleetctl ssh {} bash -c 'hostname; docker ps -a | grep Exited | cut -d" " -f1 | xargs docker rm'
 
 bind '"\C-e": alias-expand-line'
+
+alias iptl="sudo iptables -nvL"
+alias fl="fleetctl "
