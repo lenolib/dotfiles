@@ -239,9 +239,6 @@ alias lmsr="ls -l --sort=size $lsMB"
 alias xm='xmodmap modmap && exit'
 alias xin='sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Synaptics Finger" 38, 43, 0 && sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Synaptics Area" 1500, 4600, 2400, 0 && sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Synaptics Noise Cancellation" 12, 12 && sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Synaptics Soft Button Areas" 3650, 4826, 0, 2400, 0, 0, 0, 0 && sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Device Accel Profile" 1'
 
-alias xbl='rfkill unblock all && sleep 1 &&  nmcli con up uuid da4fbe88-0999-4e31-bcfb-4e6848d69d0d && exit'
-alias xwl='nmcli con up id "LiPhone" && exit'
-
 if [ -d $HOME/.homesick ]; then
     source $HOME/.homesick/repos/homeshick/homeshick.sh
 fi

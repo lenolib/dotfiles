@@ -3,7 +3,7 @@ keycode   9 = Escape NoSymbol Escape NoSymbol Escape
 keycode  10 = 1 exclam 1 exclam exclamdown onesuperior exclamdown onesuperior 1 exclam exclamdown onesuperior
 keycode  11 = 2 quotedbl 2 quotedbl at twosuperior at twosuperior 2 quotedbl at twosuperior
 keycode  12 = 3 numbersign 3 numbersign sterling threesuperior sterling threesuperior 3 numbersign sterling threesuperior
-keycode  13 = 4 currency 4 currency dollar onequarter dollar onequarter 4 currency dollar onequarter 
+keycode  13 = 4 currency 4 currency dollar onequarter dollar onequarter 4 currency dollar onequarter
 keycode  14 = 5 percent 5 percent EuroSign cent EuroSign cent 5 percent EuroSign cent
 keycode  15 = 6 ampersand 6 ampersand yen fiveeighths yen fiveeighths 6 ampersand yen fiveeighths
 keycode  20 = plus question plus question backslash questiondown backslash questiondown plus question backslash questiondown
@@ -214,58 +214,94 @@ keycode 253 =
 keycode 254 =
 keycode 255 =
 
-keycode  16 = 7 slash      braceleft  slash      braceleft    division 1 2 3 4 5 6 
-keycode  17 = 8 parenleft  BackSpace  parenleft  bracketleft  1 2 3 4 5 6
-keycode  18 = 9 parenright Delete     parenright bracketright 1 2 3 4 5 6
-keycode  19 = 0 equal      braceright equal      braceright   1 2 3 4 5 6
-
-keycode  34 = aring          Aring           asciicircum Aring      dead_diaeresis dead_abovering dead_diaeresis dead_abovering
-keycode  35 = dead_diaeresis dead_circumflex asciitilde  dead_tilde dead_diaeresis dead_circumflex dead_tilde
-
-keycode  26 = e E Return 1 2 3 4 5 6
-keycode  43 = h H parenleft bracketleft 2 3 4 5 6
-keycode  47 = odiaeresis Odiaeresis parenright bracketright Return 1 2 3 4
-
-keycode  44 = j J Left    Left    Down 2 3 4 5 6
-keycode  45 = k K Down    Down    Up 2 3 4 5 6
-keycode  46 = l L Right   Right   Next 2 3 4 5 6
-keycode  31 = i I Up      Up      Prior 2 3 4 5 6
-keycode  32 = o O End     End     End 2 3 4 5 6
-keycode  30 = u U Home    Home    1 2 3 4 5 6
-keycode  57 = n N less    less    1 2 3 4 5 6
-keycode  58 = m M greater greater 1 2 3 4 5 6
-keycode  29 = y Y bracketleft 2 3 4 5 6
-keycode  33 = p P bracketright 2 3 4 5 6
-keycode  59 = comma semicolon Prior Prior 1 2 3 4 5 6
-keycode  60 = period colon Next Next 1 2 3 4 5 6
-keycode  61 = minus underscore bar 1 2 3 4 5 6 7
-
-keycode  48 = adiaeresis Adiaeresis slash 1 2 3 4 5 6
-keycode  51 = apostrophe asterisk grave acute 1 2 3 4
-
-keycode  50 = Shift_L NoSymbol Shift_L NoSymbol Shift_L
-
-keycode  64 = Alt_L Meta_L Alt_L Meta_L Alt_L Meta_L
-keycode  65 = space Escape space space Return 2 3 4 5 6
-keycode  66 = Control_L Control_L Control_L Control_L Control_L Control_L
-
-keycode  92 = ISO_Level3_Shift NoSymbol ISO_Level3_Shift NoSymbol ISO_Level3_Shift
-keycode  93 =
-keycode  94 = Mode_switch NoSymbol Mode_switch NoSymbol Mode_switch
 
 keycode  97 = Shift_R
 keycode  98 = Katakana NoSymbol Katakana NoSymbol 1 2 3 4 5 6
 keycode  99 = Hiragana NoSymbol Hiragana NoSymbol 1 2 3 4 5 6
 keycode 100 = Return Henkan_Mode NoSymbol Henkan_Mode 1 2 3 4 5 6
-keycode 101 = ISO_Level3_Shift
-keycode 102 = Mode_switch NoSymbol Mode_switch NoSymbol Mode_switch
-!ISO_Level3_Shift NoSymbol ISO_Level3_Shift NoSymbol
 
 keycode 107 = Super_L Super_L Print Sys_Req Print Sys_Req Print Sys_Req
 keycode 108 = ISO_Level3_Shift NoSymbol ISO_Level3_Shift NoSymbol ISO_Level3_Shift
 
 keycode 203 = Mode_switch NoSymbol Mode_switch NoSymbol Mode_switch
 
+
+! ====== Here begins new bindings =======
+! Let's denote our new modifier key as KX. It is the key between left shift and z with keycode 94
+
+! KX + 8 = backspace
+! KX + 9 = delete
+! KX + 7 = left braces
+! KX + 0 = right braces
+keycode  16 = 7 slash      braceleft  slash      braceleft    division 1 2 3 4 5 6
+keycode  17 = 8 parenleft  BackSpace  parenleft  bracketleft  1 2 3 4 5 6
+keycode  18 = 9 parenright Delete     parenright bracketright 1 2 3 4 5 6
+keycode  19 = 0 equal      braceright equal      braceright   1 2 3 4 5 6
+
+! KX + å = hat (circumflex)
+! KX + ^ = tilde-symbol
+keycode  34 = aring          Aring           asciicircum Aring      dead_diaeresis dead_abovering dead_diaeresis dead_abovering
+keycode  35 = dead_diaeresis dead_circumflex asciitilde  dead_tilde dead_diaeresis dead_circumflex dead_tilde
+
+! KX + e = Return / Enter
+! KX + h = left parenthesis
+! KX + ö = right parenthesis
+keycode  26 = e E Return 1 2 3 4 5 6
+keycode  43 = h H parenleft bracketleft 2 3 4 5 6
+keycode  47 = odiaeresis Odiaeresis parenright bracketright Return 1 2 3 4
+
+! KX + jkli = arrow keys
+keycode  44 = j J Left    Left    Down 2 3 4 5 6
+keycode  45 = k K Down    Down    Up 2 3 4 5 6
+keycode  46 = l L Right   Right   Next 2 3 4 5 6
+keycode  31 = i I Up      Up      Prior 2 3 4 5 6
+
+! KX + o = End
+! KX + u = Home
+keycode  32 = o O End     End     End 2 3 4 5 6
+keycode  30 = u U Home    Home    1 2 3 4 5 6
+
+! KX + n = less than sign
+! KX + m = greater than sign
+! KX + y = left bracket
+! KX + p = right bracket
+keycode  57 = n N less    less    1 2 3 4 5 6
+keycode  58 = m M greater greater 1 2 3 4 5 6
+keycode  29 = y Y bracketleft 2 3 4 5 6
+keycode  33 = p P bracketright 2 3 4 5 6
+
+! KX + , = PageUp
+! KX + . = PageDown
+! KX + - = pipe symbol (bar)
+keycode  59 = comma semicolon Prior Prior 1 2 3 4 5 6
+keycode  60 = period colon Next Next 1 2 3 4 5 6
+keycode  61 = minus underscore bar 1 2 3 4 5 6 7
+
+! KX + ä = slash
+! KX + ' = backtick  (grave, use +shift for acute)
+keycode  48 = adiaeresis Adiaeresis slash 1 2 3 4 5 6
+keycode  51 = apostrophe asterisk grave acute 1 2 3 4
+
+keycode  50 = Shift_L NoSymbol Shift_L NoSymbol Shift_L
+
+keycode  64 = Alt_L Meta_L Alt_L Meta_L Alt_L Meta_L
+! Shift + Space = Escape  (also: AltGr + Space = Return (but easier to use KX + e))
+keycode  65 = space Escape space space Return 2 3 4 5 6
+keycode  66 = Control_L Control_L Control_L Control_L Control_L Control_L
+
+keycode  92 = ISO_Level3_Shift NoSymbol ISO_Level3_Shift NoSymbol ISO_Level3_Shift
+keycode  93 =
+
+! This is our KX (the < or > key)
+! We set this to be the mode switch key, whatever that means. We get level3 behavior.
+keycode  94 = Mode_switch NoSymbol Mode_switch NoSymbol Mode_switch
+
+! [To be documented assignments]
+keycode 101 = ISO_Level3_Shift
+keycode 102 = Mode_switch NoSymbol Mode_switch NoSymbol Mode_switch
+!ISO_Level3_Shift NoSymbol ISO_Level3_Shift NoSymbol
+
+! Clear and define modifiers
 clear shift
 add shift = Shift_L Shift_R
 

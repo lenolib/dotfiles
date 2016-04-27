@@ -75,3 +75,7 @@ bind '"\C-e": alias-expand-line'
 
 alias iptl="sudo iptables -nvL"
 alias fl="fleetctl "
+
+function getsrvc () { flu '' | cut -f1 | grep $1 | grep $2 | cut -f1 -d '@' | uniq ; }
+
+
