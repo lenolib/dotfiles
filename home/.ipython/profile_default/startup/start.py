@@ -3,14 +3,15 @@ import os
 import sys
 import pandas as pd
 from time import time
+from time import time as _time  # Used here, avoids problems if overwritten
 import numpy as np
 import matplotlib as mpl
 from matplotlib.pyplot import plot, show, tight_layout, plot_date, gcf, gca
 import matplotlib.pyplot as plt
 try:
-    from utils.base import decomp
+    from liteutils.base import decomp
 except ImportError:
-    print('Could not find utils, skippin decomp import')
+    print('Could not find liteutils, skippin decomp import')
 from functools import partial
 from operator import add, itemgetter, attrgetter
 from itertools import repeat, starmap
@@ -18,8 +19,8 @@ from collections import Sequence
 import pprint
 import blessings
 
-import pudb.ipython, pudb.lowlevel
-pudb.lowlevel.detect_encoding = lambda _: ('utf-8', [])
+#import pudb.ipython, pudb.lowlevel
+#pudb.lowlevel.detect_encoding = lambda _: ('utf-8', [])
 
 
 pd.set_option('display.width', None)  # Detect terminal width
@@ -72,16 +73,16 @@ print(
 class ExecTimer(object):
     def __init__(self, ip):
         self.shell = ip
-        self.t_pre = time()
+        self.t_pre = _time()
         self.texc = 0
         self.prev_texc = 0
 
     def pre_execute(self):
-        self.t_pre = time()
+        self.t_pre = _time()
 
     def post_execute(self):
         self.prev_texc = self.texc
-        elap = time() - self.t_pre
+        elap = _time() - self.t_pre
         if elap >= 1:
             self.texc = str(round(elap, 1)) + ' s'
         else:

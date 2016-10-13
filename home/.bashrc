@@ -16,6 +16,9 @@ shopt -s histappend
 HISTSIZE=91000
 HISTFILESIZE=912000
 
+shopt -s histappend
+PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
+
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
@@ -127,6 +130,9 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 alias lstree="ls -R | grep \":$\" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
 alias grepr="grep -R"
 alias g="grep --color=auto"
+alias fat='pygmentize -g'  # Colorized cat
+alias ra="ranger"
+alias dri='docker run --rm -it '
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -171,7 +177,38 @@ alias c='cd -'
 function d () { cd "$1"; ls -la; }
 
 # Shorthand for finding
-function hit () { find . -type f -iname "*$1*" | grep -i "$1"; }
+function hit () { arg2=$2; find . -maxdepth ${arg2:=999} -type f -iname "*$1*" | grep -i "$1"; }
+function hitdir () { arg2=$2; find . -maxdepth ${arg2:=999} -type d -iname "*$1*" | grep -i "$1"; }
+function fin () { grep -n "$1" $(find . -type f -name "*$2*"); }
+
+# Replace a string in non-hidden files
+function replacer () {
+    if [[ -z "$1" ]]; then
+        echo "Function requires at least one argument"
+        return 1
+    fi
+    files=`find . \( ! -regex '.*/\..*' \) -name "*" -type f -exec grep -l "$1" {} +`;
+    if [[ -z "$files" ]]; then
+        echo "No files found containing '$1'"
+        return 0
+    fi
+    echo "Files containing '$1':"
+    echo "------"
+    echo "$files"
+    echo "------"
+    read -p ">>> Replace '$1' --> '$2' in the above files? [Y/n]: " RESP;
+    if [[ "$RESP" == "y" || "$RESP" == "Y" || "$RESP" == "" ]]; then
+        echo "$files" | xargs sed -i "s/$1/$2/g"
+    fi
+}
+
+# Find python imports in current directory that are not part of the python standard library
+function non-stdlib-imports () {
+    # Requires isort to be pip-installed
+    stdlib_mods=`python -c "import isort, sys; sys.stdout.write('|'.join(isort.settings.default['known_standard_library']))"`
+    non_stdlib_used_mods=`grep "import " $(find . -name "*.py") | cut -f2 -d ' ' | cut -f1 -d'.' | sort | uniq | grep -v -E $stdlib_mods`
+    grep -nRE "$non_stdlib_used_mods" | grep -e "import.* " -e "from.* "
+}
 
 
 # Shorthand for trash, which also of course can be used in place of rm -r
@@ -191,7 +228,7 @@ NOCOLOR='\033[0m'
 
 # source ~/.bash_alias_completion
 function clrdiff () { colordiff -y -W $(tput cols) "$@" | less -R;}
-function hgrep () { history | grep -P -- "$*"; }
+function hgrep () { history | grep -P -- "$1" | grep -P -- "$2" | grep -P -- "$3"; }
 function outdated_reqs () {
   echo "Checking installed outdated modules in $1 ..."
   local modules=$(cat $1 | sed 's/==.*//' | sed -e '{:q;N;s/\n/\|/g;t q}')
@@ -245,14 +282,17 @@ fi
 
 function hostgrep () { cat ~/.ssh/config | grep -A1 $1 | grep -A1 $2 | grep -v '\-\-' | tee /dev/fd/2 | grep -v "Host " | awk '{print $2}'; }
 
-if [ -f "$HOME/google-cloud-sdk/path.bash.inc" ]; then
-    # The next line updates PATH for the Google Cloud SDK.
-    source "$HOME/google-cloud-sdk/path.bash.inc"
-    # The next line enables bash completion for gcloud.
-    source "$HOME/google-cloud-sdk/completion.bash.inc"
-fi
+#if [ -f "$HOME/google-cloud-sdk/path.bash.inc" ]; then
+#    # The next line updates PATH for the Google Cloud SDK.
+#    source "$HOME/google-cloud-sdk/path.bash.inc"
+#    # The next line enables bash completion for gcloud.
+#    source "$HOME/google-cloud-sdk/completion.bash.inc"
+#fi
+export PATH=$PATH:$HOME/opt/terraform
+export PATH=$PATH:$HOME/.local/bin
+alias vew='source /usr/local/bin/virtualenvwrapper.sh'
+#source /usr/local/bin/virtualenvwrapper_lazy.sh
 
-export PATH=$PATH:$HOME/.local/bin:$HOME/opt/terraform
 
  
 alias xbl='rfkill unblock all && sleep 1 &&  nmcli con up uuid 1bf224a9-c005-4c6f-ae37-f5134504cc37 && exit'
