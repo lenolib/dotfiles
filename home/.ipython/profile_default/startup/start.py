@@ -1,23 +1,30 @@
 from datetime import datetime, timedelta, date
+
 import os
 import sys
-import pandas as pd
-from time import time
-from time import time as _time  # Used here, avoids problems if overwritten
+
+from IPython.terminal.prompts import Prompts, Token
+
 import numpy as np
+import pandas as pd
 import matplotlib as mpl
+
 from matplotlib.pyplot import plot, show, tight_layout, plot_date, gcf, gca
 import matplotlib.pyplot as plt
-try:
-    from liteutils.base import decomp
-except ImportError:
-    print('Could not find liteutils, skippin decomp import')
+
+from time import time
+from time import time as _time  # Used here, avoids problems if overwritten
 from functools import partial
 from operator import add, itemgetter, attrgetter
 from itertools import repeat, starmap
 from collections import Sequence
 import pprint
 import blessings
+
+try:
+    from liteutils.base import decomp
+except ImportError:
+    print('Could not find liteutils, skippin decomp import')
 
 #import pudb.ipython, pudb.lowlevel
 #pudb.lowlevel.detect_encoding = lambda _: ('utf-8', [])
@@ -121,10 +128,14 @@ class ExecTimer(object):
         self.shell.events.register('pre_execute', self.pre_execute)
         self.shell.events.register('post_execute', self.post_execute)
 
-ExecTimer(get_ipython()).register()
+class InfoPrompt(Prompts):
+    def in_prompt_tokens(self, cli=None):
+        txt = '{t}, {reslen}\nIn[{n}]: '.format(
+           t=self.shell.user_ns['texc'],
+           reslen=self.shell.user_ns['reslen'],
+           n=self.shell.execution_count,
+        )
+        return [(Token.Prompt, txt)]
 
-# Edit config here instead of in ipython_config.py
-get_ipython().run_line_magic(
-    'config',
-    r"PromptManager.in_template = '{color.Green}{texc}, {reslen}\nIn[\\#]: '"
-)
+ExecTimer(get_ipython()).register()
+get_ipython().prompts = InfoPrompt(get_ipython())

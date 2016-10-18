@@ -5,6 +5,15 @@ c.InteractiveShellApp.exec_lines = [
     'from __future__ import division, print_function'
 ]
 c.TerminalInteractiveShell.display_completions = 'readlinelike'
+
+from pygments.token import Token
+
+#c.TerminalInteractiveShell.colors = 'Linux'
+#c.TerminalInteractiveShell.highlighting_style = 'lovelace'
+c.TerminalInteractiveShell.highlighting_style_overrides = {
+   Token.Prompt: '#00bb00 bold',
+}
+
 #------------------------------------------------------------------------------
 # InteractiveShellApp configuration
 #------------------------------------------------------------------------------
