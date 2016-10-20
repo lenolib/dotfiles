@@ -87,6 +87,47 @@ class ExecTimer(object):
     def pre_execute(self):
         self.t_pre = _time()
 
+    def _last_assignment(self):
+        if self._get_last_value() is None:
+            last_in = self.shell.user_ns['In'][-1]
+            if '=' in last_in:
+                varname = last_in.split('=')[0].strip()
+                if varname in self.shell.user_ns:
+                    return (varname, self.shell.user_ns[varname])
+        # Default
+        return False
+
+    def _get_last_value(self):
+        # Hackish solution for '_' not being set to None if output
+        # of last statement actually was None
+        if self.shell.execution_count not in self.shell.user_ns['Out']:
+            res = None
+        else:
+            res = self.shell.user_ns['_']
+
+        return res
+
+    def _get_description(self, value):
+        has_len_but_not_iter = lambda v:(
+            hasattr(v, '__len__') and not hasattr(v, '__iter__')
+        )
+        desc = str(type(value)) if value is not None else 'None'
+        if '<class ' in desc:
+            desc = desc[8:-2]
+        elif '<type ' in desc:
+            desc = desc[7:-2]
+        try:
+            safe_types = (tuple, list, dict, set, basestring, Sequence)
+            if isinstance(value, type):
+                pass
+            elif hasattr(value, 'shape'):
+                desc = '{}, shape {}'.format(desc, value.shape)
+            elif isinstance(value, safe_types) or has_len_but_not_iter(value):
+                desc = '{}, len {}'.format(desc, len(value))
+        except Exception:
+            pass
+        return desc
+
     def post_execute(self):
         self.prev_texc = self.texc
         elap = _time() - self.t_pre
@@ -94,38 +135,13 @@ class ExecTimer(object):
             self.texc = str(round(elap, 1)) + ' s'
         else:
             self.texc = str(int(round(elap*1000,0))) + ' ms'
-
-        # Hackish solution for '_' not being set to None if output
-        # of last statement actually was None
-        if self.shell.execution_count not in self.shell.user_ns['Out']:
-            res = None
-        else:
-            res = self.shell.user_ns['_']
-        restype = str(type(res))
-        if res is None:
-            resdesc = 'None'
-        elif '<class ' in restype:
-            resdesc = restype[8:-2]
-        elif '<type ' in restype:
-            resdesc = restype[7:-2]
-        else:
-            resdesc = restype
-        is_safe_type = lambda obj: isinstance(
-            obj,
-            (tuple, list, dict, set, basestring, Sequence)
-        )
-        try:
-            if isinstance(res, type):
-                pass
-            elif hasattr(res, 'shape'):
-                resdesc = '{}, shape {}'.format(resdesc, res.shape)
-            elif is_safe_type(res) or (hasattr(res, '__len__')
-                                       and not hasattr(res, '__iter__')):
-                resdesc = '{}, len {}'.format(resdesc, len(res))
-        except Exception:
-            pass
+        assignment = self._last_assignment()
+        lastval = assignment[1] if assignment else self._get_last_value()
+        desc = self._get_description(lastval)
+        if assignment:
+            desc = "Assigned '{}', {}".format(assignment[0], desc)
         # Only add or update user namespace var if it is safe to do so
-        self.shell.push({'reslen':resdesc})
+        self.shell.push({'_last_value_desc': desc})
         if 'texc' not in self.shell.user_ns or \
                 self.shell.user_ns['texc'] == self.prev_texc:
             self.shell.push({'texc': self.texc})
@@ -136,14 +152,16 @@ class ExecTimer(object):
         self.shell.events.register('pre_execute', self.pre_execute)
         self.shell.events.register('post_execute', self.post_execute)
 
+
 class InfoPrompt(Prompts):
     def in_prompt_tokens(self, cli=None):
-        txt = '{t}, {reslen}\nIn[{n}]: '.format(
-           t=self.shell.user_ns['texc'],
-           reslen=self.shell.user_ns['reslen'],
+        txt = '{t}, {last_desc}\nIn[{n}]: '.format(
+           t=self.shell.user_ns.get('texc'),
+           last_desc=self.shell.user_ns.get('_last_value_desc'),
            n=self.shell.execution_count,
         )
         return [(Token.Prompt, txt)]
+
 
 ExecTimer(get_ipython()).register()
 get_ipython().prompts = InfoPrompt(get_ipython())
