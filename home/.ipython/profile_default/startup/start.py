@@ -94,9 +94,17 @@ class ExecTimer(object):
             self.texc = str(round(elap, 1)) + ' s'
         else:
             self.texc = str(int(round(elap*1000,0))) + ' ms'
-        res = self.shell.user_ns['_']
+
+        # Hackish solution for '_' not being set to None if output
+        # of last statement actually was None
+        if self.shell.execution_count not in self.shell.user_ns['Out']:
+            res = None
+        else:
+            res = self.shell.user_ns['_']
         restype = str(type(res))
-        if '<class ' in restype:
+        if res is None:
+            resdesc = 'None'
+        elif '<class ' in restype:
             resdesc = restype[8:-2]
         elif '<type ' in restype:
             resdesc = restype[7:-2]
