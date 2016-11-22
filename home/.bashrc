@@ -13,6 +13,7 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTFILE=/home/$USER/.bash_history_nondefault
 HISTSIZE=91000
 HISTFILESIZE=912000
 
@@ -118,12 +119,32 @@ alias gllum='git pull upstream master'
 alias gap='git add --patch'
 alias gcm='git commit -m'
 alias gcam='git commit -am'
-alias glg='git log --graph --pretty="format:%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset"'
+#alias glg='git log --graph --pretty="format:%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset"'
 alias gdh='git diff HEAD^'
 alias gdc='git diff --cached'
 alias gsubll='git submodule foreach git pull origin master'
 alias gsubup='git submodule foreach --recursive git pull origin master && git submodule foreach --recursive git submodule update'
 alias gsu='git submodule update'
+
+# fzf git commit [diff] browser
+glg() {
+  git log --graph --color=always \
+      --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
+  fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
+      --bind "ctrl-m:execute:
+                (grep -o '[a-f0-9]\{7\}' | head -1 |
+                xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
+                {}
+FZF-EOF"
+}
+
+# fzf list and checkout git branches
+gren() {
+  local branches branch
+  branches=$(git branch -vv | while IFS= read li; do x=$(printf "$li" | sed 's/\*//' | awk '{print $2}' | xargs git show --no-patch --date='short' --format='%ad'); printf "$x $li\n"; done | sort | tac)
+  branch=$(echo "$branches" | fzf +m) &&
+  git checkout $(echo "$branch" | sed "s/\*//" | awk '{print $2}' | sed "s/.* //")
+}
 
 
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -228,7 +249,8 @@ NOCOLOR='\033[0m'
 
 # source ~/.bash_alias_completion
 function clrdiff () { colordiff -y -W $(tput cols) "$@" | less -R;}
-function hgrep () { history | grep -P -- "$1" | grep -P -- "$2" | grep -P -- "$3"; }
+#function hgrep () { history | grep -P -- "$1" | grep -P -- "$2" | grep -P -- "$3"; }
+function hgrep () { ( cat --number /home/lennart/.bash_history_2016-10-30; history; ) | grep -P -- "$1" | grep -P -- "$2" | grep -P -- "$3"; }
 function outdated_reqs () {
   echo "Checking installed outdated modules in $1 ..."
   local modules=$(cat $1 | sed 's/==.*//' | sed -e '{:q;N;s/\n/\|/g;t q}')
@@ -297,3 +319,39 @@ alias vew='source /usr/local/bin/virtualenvwrapper.sh'
  
 alias xbl='rfkill unblock all && sleep 1 &&  nmcli con up uuid 1bf224a9-c005-4c6f-ae37-f5134504cc37 && exit'
 alias xwl='nmcli con up id "LiPhoneN" && exit'
+
+export FZF_CTRL_R_OPTS='--sort'
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+bind '"\C-r": reverse-search-history' 
+bind '"\C-n": " \C-e\C-u`__fzf_history__`\e\C-e\e^\er"'
+__fzf_history__() (
+  local line
+  shopt -u nocaseglob nocasematch
+  all_hist=$( HISTTIMEFORMAT= cat --number ~/.bash_history_2016-10-30; history; )
+  line=$(
+    HISTTIMEFORMAT=  echo "$all_hist" |
+    eval "$(__fzfcmd) +s --tac +m -n2..,.. --tiebreak=index --toggle-sort=ctrl-r $FZF_CTRL_R_OPTS" |
+    command grep '^ *[0-9]') &&
+    if [[ $- =~ H ]]; then
+      sed 's/^ *\([0-9]*\)\** *//' <<< "$line"
+      #sed 's/^ *\([0-9]*\)\** .*/!\1/' <<< "$line" 
+    else
+      sed 's/^ *\([0-9]*\)\** *//' <<< "$line"
+    fi
+)
+
+
+# fco - checkout git branch/tag
+fco() {
+  local tags branches target
+  tags=$(
+    git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
+  branches=$(
+    git branch --all | grep -v HEAD             |
+    sed "s/.* //"    | sed "s#remotes/[^/]*/##" |
+    sort -u          | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
+  target=$(
+    (echo "$tags"; echo "$branches") |
+    fzf-tmux -l30 -- --no-hscroll --ansi +m -d "\t" -n 2) || return
+  git checkout $(echo "$target" | awk '{print $2}')
+}
