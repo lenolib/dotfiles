@@ -38,18 +38,16 @@ DT = datetime
 tdel = timedelta
 
 
-values_as_their_types = lambda dictionary: dict(map(
-    lambda (k, v): (k, type(v)),
-    dictionary.iteritems(),
-))
+values_as_their_types = lambda dictionary: {
+    k: type(v) for (k,v) in dictionary.items()
+}
 _globals0 = values_as_their_types(globals())
 def gdiff():
     new_globals = values_as_their_types(globals())
     keydiff = set(new_globals.keys()) - set(_globals0.keys())
-    diff = dict(filter(
-        lambda (k, v): k in keydiff,
-        new_globals.iteritems()
-    ))
+    diff = {
+        k: v for (k, v) in new_globals.items() if k in keydiff
+    }
 
     return diff
 
@@ -58,7 +56,7 @@ def tabulate(words, termwidth=79, pad=3):
     ncols = max(1, termwidth // width)
     nrows = (len(words) - 1) // ncols + 1
     table = []
-    for i in xrange(nrows):
+    for i in range(nrows):
         row = words[i::nrows]
         format_str = ('%%-%ds' % width) * len(row)
         table.append(format_str % tuple(row))

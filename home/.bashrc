@@ -17,7 +17,6 @@ HISTFILE=/home/$USER/.bash_history_nondefault
 HISTSIZE=91000
 HISTFILESIZE=912000
 
-shopt -s histappend
 PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 
 # check the window size after each command and, if necessary,
@@ -302,7 +301,7 @@ if [ -d $HOME/.homesick ]; then
     source $HOME/.homesick/repos/homeshick/homeshick.sh
 fi
 
-function hostgrep () { cat ~/.ssh/config | grep -A1 $1 | grep -A1 $2 | grep -v '\-\-' | tee /dev/fd/2 | grep -v "Host " | awk '{print $2}'; }
+function hostgrep () { cat ~/.ssh/config | grep -P -A1 $1 | grep -A1 $2 | grep -v '\-\-' | tee /dev/fd/2 | grep -v "Host " | awk '{print $2}'; }
 
 #if [ -f "$HOME/google-cloud-sdk/path.bash.inc" ]; then
 #    # The next line updates PATH for the Google Cloud SDK.
