@@ -32,6 +32,9 @@ alias fjf="fleetctl journal -f -lines=300"
 alias fnr="fleetctl list-units | grep -v running"
 alias not_running="fleetctl list-units | grep -v running"
 alias flm="fleetctl list-machines"
+alias fsp="fleetctl stop "
+alias fst="fleetctl start "
+alias fd="fleetctl destroy "
 
 # all_machines [<role-filter>] [<command>]
 # Example: run command on all machiness disregarding of role (note douple-douple-quotation marks)

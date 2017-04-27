@@ -3,20 +3,33 @@ from datetime import datetime, timedelta, date
 import os
 import sys
 
-import numpy as np
-import pandas as pd
-import matplotlib as mpl
+try:
+    import numpy as np
+    import pandas as pd
+    import matplotlib as mpl
 
-from matplotlib.pyplot import plot, show, tight_layout, plot_date, gcf, gca
-import matplotlib.pyplot as plt
+    from matplotlib.pyplot import plot, show, tight_layout, plot_date, gcf, gca
+    import matplotlib.pyplot as plt
+    import pprint
+    import blessings
+    pd.set_option('display.width', None)  # Detect terminal width
+
+    pp = pprint.pprint
+    DF = pd.DataFrame
+    stamp = pd.Timestamp
+    S = pd.Series
+    fig = plt.figure
+    DT = datetime
+    tdel = timedelta
+except ImportError as ie:
+    print('Could not import %s' %ie)
 
 from time import time
 from functools import partial
 from operator import add, itemgetter, attrgetter
 from itertools import repeat, starmap
 from collections import Sequence
-import pprint
-import blessings
+
 
 try:
     from liteutils.base import decomp
@@ -25,17 +38,6 @@ except ImportError:
 
 #import pudb.ipython, pudb.lowlevel
 #pudb.lowlevel.detect_encoding = lambda _: ('utf-8', [])
-
-
-pd.set_option('display.width', None)  # Detect terminal width
-
-pp = pprint.pprint
-DF = pd.DataFrame
-stamp = pd.Timestamp
-S = pd.Series
-fig = plt.figure
-DT = datetime
-tdel = timedelta
 
 
 values_as_their_types = lambda dictionary: {

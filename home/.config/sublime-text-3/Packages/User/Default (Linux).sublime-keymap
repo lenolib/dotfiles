@@ -1,0 +1,34 @@
+[
+  {
+    "keys": ["f1"],
+    "command": "dired",
+    "args": {
+      "immediate": true,
+      "single_pane": true,
+      "other_group": "left",
+      "project": true
+    }
+  },
+  {
+    "keys": [" "],
+    "command": "dired_expand",
+    "args": { "toggle": true },
+    "context": [
+      { "key": "selector", "operator": "equal", "operand": "text.dired" },
+      { "key": "setting.dired_rename_mode", "operand": false }
+    ]
+  },
+  { "keys": ["ctrl+e"], "command": "cycle_group" },
+
+  // Toggle foucs of sidebar with ctrl+g  
+  { "keys": ["ctrl+g"], "command": "focus_side_bar" },
+  { "keys": ["ctrl+g"],
+    "command": "focus_group",
+    "args": { "group": 0 },
+    "context": [ {"key": "control", "operand": "sidebar_tree"} ] 
+  },
+  
+  // Set normal right-left tab behaviour of ctrl+tab (like in chrome)
+  { "keys": ["ctrl+tab"], "command": "next_view" },
+  { "keys": ["ctrl+shift+tab"], "command": "prev_view" },
+]  

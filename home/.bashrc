@@ -118,7 +118,7 @@ alias gllum='git pull upstream master'
 alias gap='git add --patch'
 alias gcm='git commit -m'
 alias gcam='git commit -am'
-#alias glg='git log --graph --pretty="format:%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset"'
+alias glg_='git log --graph --pretty="format:%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset"'
 alias gdh='git diff HEAD^'
 alias gdc='git diff --cached'
 alias gsubll='git submodule foreach git pull origin master'
@@ -148,7 +148,7 @@ gren() {
 
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 alias lstree="ls -R | grep \":$\" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
-alias grepr="grep -R"
+alias grepr="grep -Rn"
 alias g="grep --color=auto"
 alias fat='pygmentize -g'  # Colorized cat
 alias ra="ranger"
@@ -311,8 +311,8 @@ function hostgrep () { cat ~/.ssh/config | grep -P -A1 $1 | grep -A1 $2 | grep -
 #fi
 export PATH=$PATH:$HOME/opt/terraform
 export PATH=$PATH:$HOME/.local/bin
-alias vew='source /usr/local/bin/virtualenvwrapper.sh'
-#source /usr/local/bin/virtualenvwrapper_lazy.sh
+alias vew='source $HOME/.local/bin/virtualenvwrapper.sh'
+source $HOME/.local/bin/virtualenvwrapper_lazy.sh
 
 
  
@@ -338,6 +338,10 @@ __fzf_history__() (
       sed 's/^ *\([0-9]*\)\** *//' <<< "$line"
     fi
 )
+
+if [ -f $HOME/.hub.bash_completion.sh ]; then
+  . $HOME/.hub.bash_completion.sh
+fi
 
 
 # fco - checkout git branch/tag
