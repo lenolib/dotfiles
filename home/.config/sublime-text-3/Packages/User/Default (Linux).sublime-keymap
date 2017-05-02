@@ -18,7 +18,6 @@
       { "key": "setting.dired_rename_mode", "operand": false }
     ]
   },
-  { "keys": ["ctrl+e"], "command": "cycle_group" },
 
   // Toggle foucs of sidebar with ctrl+g  
   { "keys": ["ctrl+g"], "command": "focus_side_bar" },
@@ -27,8 +26,62 @@
     "args": { "group": 0 },
     "context": [ {"key": "control", "operand": "sidebar_tree"} ] 
   },
-  
+
+  // ctrl+e to cycle between groups
+  { "keys": ["ctrl+e"], "command": "cycle_group" },  
+
+  // ctrl+d to delete line
+  { "keys": ["ctrl+d"], "command": "run_macro_file", "args": {"file": "res://Packages/Default/Delete Line.sublime-macro"} },
+
   // Set normal right-left tab behaviour of ctrl+tab (like in chrome)
   { "keys": ["ctrl+tab"], "command": "next_view" },
   { "keys": ["ctrl+shift+tab"], "command": "prev_view" },
+
+
+  { "keys": ["ctrl+alt+enter"], "command": "replace_all", "args": {"close_panel": true},
+     "context": [{"key": "panel", "operand": "replace"}, {"key": "panel_has_focus"}]
+  },
+
+  // Make shift+space work as Escape. Sublime does not respect system-level binding
+  { "keys": ["shift+space"], "command": "single_selection", "context":
+    [
+      { "key": "num_selections", "operator": "not_equal", "operand": 1 }
+    ]
+  },
+  { "keys": ["shift+space"], "command": "clear_fields", "context":
+    [
+      { "key": "has_next_field", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["shift+space"], "command": "clear_fields", "context":
+    [
+      { "key": "has_prev_field", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["shift+space"], "command": "hide_panel", "args": {"cancel": true},
+    "context":
+    [
+      { "key": "panel_visible", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["shift+space"], "command": "hide_overlay", "context":
+    [
+      { "key": "overlay_visible", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["shift+space"], "command": "hide_popup", "context":
+    [
+      { "key": "popup_visible", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["shift+space"], "command": "hide_auto_complete", "context":
+    [
+      { "key": "auto_complete_visible", "operator": "equal", "operand": true }
+    ]
+  },
+
+  
+  //
+  // Static (default) binding here, because any missing trailing commas can be frustrating
+  { "keys": ["ctrl+q"], "command": "exit" }
 ]  
