@@ -153,6 +153,7 @@ alias g="grep --color=auto"
 alias fat='pygmentize -g'  # Colorized cat
 alias ra="ranger"
 alias dri='docker run --rm -it '
+alias dps='docker ps'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
