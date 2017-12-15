@@ -1,19 +1,19 @@
 #!/bin/bash
 set -e
 
-read -p "apt-get update & upgrade? [y/N]: " RESP; if [ "$RESP" == "y" ]; then 
+read -p "apt-get update & upgrade? [y/N]: " RESP; if [ "$RESP" == "y" ]; then
     apt-get update && apt-get upgrade
 fi
 
 read -p "Install mscorefonts? [y/N]: " RESP;
-if [ "$RESP" == "y" ]; then 
+if [ "$RESP" == "y" ]; then
     # https://askubuntu.com/questions/16225/how-can-i-accept-the-microsoft-eula-agreement-for-ttf-mscorefonts-installer
     echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections
     apt-get install ttf-mscorefonts-installer
 fi
 
 
-read -p "Install apt packages? [y/N]: " RESP; if [ "$RESP" == "y" ]; then 
+read -p "Install apt packages? [y/N]: " RESP; if [ "$RESP" == "y" ]; then
     cat apt-packages.txt | grep -v "#" | tr '\n' ' ' | xargs apt-get install
 
     # [Replace nautilus with nemo]
@@ -31,9 +31,20 @@ fi
 
 
 read -p "Install pip packages? [y/N]: " RESP; if [ "$RESP" == "y" ]; then
-    pip install -r pip-packages.txt
+    pip install --user --upgrade pip
+    pip install --user -r pip-packages.txt
 fi
 
+read -p "Install sublime text and vscode? [y/N]: " RESP; if [ "$RESP" == "y" ]; then
+    wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
+    sudo apt-get install apt-transport-https
+    echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
+    sudo apt-get update
+    sudo apt-get install sublime-text
+    curl -o /tmp/vscode.deb -L "https://go.microsoft.com/fwlink/?LinkID=760868"
+    sudo dpkg -i /tmp/vscode.deb
+    sudo apt-get install -f
+fi
 
 
 # [chrome]
@@ -84,7 +95,7 @@ read -p "Restore ~/.config subdirs? [y/N]: " RESP; if [ "$RESP" == "y" ]; then
     done < home_dotconfig_subdirs
 fi
 
-read -p "Clone and install homeshick? [y/N]: " RESP; if [ "$RESP" == "y" ]; then 
+read -p "Clone and install homeshick? [y/N]: " RESP; if [ "$RESP" == "y" ]; then
     if [ ! -d $HOME/.homesick ]; then
         git clone git://github.com/andsens/homeshick.git $HOME/.homesick/repos/homeshick
         read -p "I will clone and add your dotfiles repo. Specify it on the form username/reponame: " URLPART
@@ -92,15 +103,30 @@ read -p "Clone and install homeshick? [y/N]: " RESP; if [ "$RESP" == "y" ]; then
     fi
 fi
 
-read -p "Install truecrypt? [y/N]: " RESP; if [ "$RESP" == "y" ]; then 
+read -p "Install truecrypt? [y/N]: " RESP; if [ "$RESP" == "y" ]; then
     add-apt-repository ppa:stefansundin/truecrypt
     apt-get update
     apt-get install truecrypt
 fi
 
-# TODO: fzf install
-# TODO: docker:
-#    apt-get install docker.io
-#    sudo usermod -aG docker $USER
-    # logout-login
-#    docker login -u lenolib
+read -p "Install fzf? [y/N]: " RESP; if [ "$RESP" == "y" ]; then
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install
+fi
+
+read -p "Install node.js? [y/N]: " RESP; if [ "$RESP" == "y" ]; then
+    curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+    sudo apt-get install -y nodejs
+fi
+
+read -p "Install docker community edition? [y/N]: " RESP; if [ "$RESP" == "y" ]; then
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    sudo apt-key fingerprint 0EBFCD88 | grep 0EBFCD88  # fails if we could not grep target
+    sudo add-apt-repository \
+       "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+       $(lsb_release -cs) \
+       stable"
+    sudo apt-get update
+    sudo apt-get install -y docker-ce
+    sudo usermod -aG docker $USER   # requires logout-login
+fi
