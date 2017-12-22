@@ -29,5 +29,14 @@
         "key": "ctrl+shift+k",
         "command": "-editor.action.deleteLines",
         "when": "editorFocus"
+    },
+    {
+        "key": "ctrl+k ctrl+m",
+        "command": "editor.unfold",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+k ctrl+m",
+        "command": "-workbench.extensions.action.showRecommendedKeymapExtensions"
     }
 ]
