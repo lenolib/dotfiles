@@ -250,7 +250,7 @@ NOCOLOR='\033[0m'
 # source ~/.bash_alias_completion
 function clrdiff () { colordiff -y -W $(tput cols) "$@" | less -R;}
 #function hgrep () { history | grep -P -- "$1" | grep -P -- "$2" | grep -P -- "$3"; }
-function hgrep () { ( cat --number /home/lennart/.bash_history_2016-10-30; history; ) | grep -P -- "$1" | grep -P -- "$2" | grep -P -- "$3"; }
+function hgrep () { ( cat --number $HOME/.bash_history_2016-10-30; history; ) | grep -P -- "$1" | grep -P -- "$2" | grep -P -- "$3"; }
 function outdated_reqs () {
   echo "Checking installed outdated modules in $1 ..."
   local modules=$(cat $1 | sed 's/==.*//' | sed -e '{:q;N;s/\n/\|/g;t q}')
@@ -359,3 +359,6 @@ fco() {
     fzf-tmux -l30 -- --no-hscroll --ansi +m -d "\t" -n 2) || return
   git checkout $(echo "$target" | awk '{print $2}')
 }
+
+# added by travis gem
+[ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
