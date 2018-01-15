@@ -80,7 +80,11 @@
     ]
   },
 
-  
+  { 
+    "keys": ["alt+d"],
+    "command": "plain_tasks_complete",
+    "context": [{ "key": "selector", "operator": "equal", "operand": "text.todo" }]
+  },
   //
   // Static (default) binding here, because any missing trailing commas can be frustrating
   { "keys": ["ctrl+q"], "command": "exit" }

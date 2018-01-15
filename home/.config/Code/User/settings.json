@@ -1,3 +1,6 @@
 {
-    "keyboard.dispatch": "keyCode"
+    "keyboard.dispatch": "keyCode",
+    "sublimeTextKeymap.promptV3Features": true,
+    "window.zoomLevel": 0,
+    "window.title": "${dirty}${activeEditorLong}${separator}${rootName}${separator}${appName}"
 }
