@@ -66,7 +66,7 @@ class LastStatementDescriberPrompt(object):
         elif '<type ' in desc:
             desc = desc[7:-2]
         try:
-            safe_types = (tuple, list, dict, set, basestring, Sequence)
+            safe_types = (tuple, list, dict, set, str, Sequence)
             if isinstance(value, type):
                 pass
             elif hasattr(value, 'shape'):

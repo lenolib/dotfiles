@@ -177,7 +177,10 @@ bind '"\C-e": alias-expand-line'
 GIT_BRANCH="git rev-parse --abbrev-ref HEAD 2> /dev/null"
 GIT_REMOTE_BRANCH="git rev-parse --symbolic-full-name --abbrev-ref @{u} 2> /dev/null"
 
-PS1="\[\033[0;37m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[0;31m\]\h'; else echo '\[\033[1;33m\]\u\[\033[0;37m\]@\[\033[1;96m\]\h'; fi)\[\033[0;37m\]]\342\224\200[\[\033[1;32m\]\w\[\033[0;37m\]]\342\224\200[\[\033[1;31m\]\$(${GIT_BRANCH})\[\033[0;37m\]->\[\033[1;31m\]\$(${GIT_REMOTE_BRANCH})\[\033[0;37m\]]\342\224\200\n\[\033[0;37m\]\342\224\224\342\225\274 \[\033[0m\]"
+PS1="\[\033[0;37m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")\
+[$(if [[ ${EUID} == 0 ]]; then echo '\[\033[0;31m\]\h'; else echo '\[\033[1;33m\]\u\[\033[0;37m\]@\[\033[1;96m\]\h'; fi)\
+\[\033[0;37m\]]\342\224\200[\[\033[1;32m\]\w\[\033[0;37m\]]\342\224\200[\[\033[1;31m\]\$(${GIT_BRANCH})\
+\[\033[0;37m\]->\[\033[1;31m\]\$(${GIT_REMOTE_BRANCH})\[\033[0;37m\]]\342\224\200\$(date +\"%H:%M:%S\")\n\[\033[0;37m\]\342\224\224\342\225\274 \[\033[0m\]"
 
 alias mosh="mosh --server='mosh-server new -l LC_ALL=en_US.UTF-8'"
 alias rednose='nosetests --rednose'
@@ -196,6 +199,10 @@ alias f='cd ..'
 # Shorthand for returning to previous directory
 alias c='cd -'
 function d () { cd "$1"; ls -la; }
+
+# Shorthand for redirecting stderr to stdout
+alias err=" 2>&1 "
+alias here='2>&1 | grep --color -E "$(pwd).*|\$"'
 
 # Shorthand for finding
 function hit () { arg2=$2; find . -maxdepth ${arg2:=999} -type f -iname "*$1*" | grep -i "$1"; }
@@ -270,6 +277,12 @@ dirfunc () {
     cd $orgpwd
 }
 
+function jwt-decode() { sed 's/\./\n/g' <<< $(cut -d. -f1,2 <<< $1) | base64 --decode | jq; }
+
+function decodeBase64 () { echo "$1" | base64 -d; echo ""; }
+
+function stamp () { date -d @$1; }
+
 
 # ls variation aliases
 alias ll='ls -alF'
@@ -314,7 +327,6 @@ export PATH=$PATH:$HOME/opt/terraform
 export PATH=$PATH:$HOME/.local/bin
 alias vew='source $HOME/.local/bin/virtualenvwrapper.sh'
 source $HOME/.local/bin/virtualenvwrapper_lazy.sh
-
 
  
 alias xbl='rfkill unblock all && sleep 1 &&  nmcli con up uuid 1bf224a9-c005-4c6f-ae37-f5134504cc37 && exit'
@@ -362,3 +374,14 @@ fco() {
 
 # added by travis gem
 [ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
+
+# https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md
+#NPM_PACKAGES="${HOME}/.npm"
+#PATH="$NPM_PACKAGES/bin:$PATH"
+
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/lennart/Downloads/google-cloud-sdk/path.bash.inc' ]; then source '/home/lennart/Downloads/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/lennart/Downloads/google-cloud-sdk/completion.bash.inc' ]; then source '/home/lennart/Downloads/google-cloud-sdk/completion.bash.inc'; fi

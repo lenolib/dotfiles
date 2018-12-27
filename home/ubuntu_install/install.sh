@@ -49,9 +49,9 @@ fi
 
 # [chrome]
 read -p "Install chrome from google? [y/N]: " RESP; if [ "$RESP" == "y" ]; then
-    apt-get install libxss1 libappindicator1 libindicator7
-    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    dpkg -i google-chrome*.deb
+sudo apt-get install libxss1 libappindicator1 libindicator7
+sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo dpkg -i google-chrome*.deb
 fi
 
 # [dconf]
@@ -116,7 +116,8 @@ fi
 
 read -p "Install node.js? [y/N]: " RESP; if [ "$RESP" == "y" ]; then
     curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
-    sudo apt-get install -y nodejs
+    #sudo apt-get update
+    #sudo apt-get install -y nodejs
 fi
 
 read -p "Install docker community edition? [y/N]: " RESP; if [ "$RESP" == "y" ]; then

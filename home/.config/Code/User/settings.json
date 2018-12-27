@@ -2,5 +2,41 @@
     "keyboard.dispatch": "keyCode",
     "sublimeTextKeymap.promptV3Features": true,
     "window.zoomLevel": 0,
-    "window.title": "${dirty}${activeEditorLong}${separator}${rootName}${separator}${appName}"
+    "window.title": "${dirty}${activeEditorLong}${separator}${rootName}${separator}${appName}",
+    "prettier.singleQuote": true,
+    "prettier.trailingComma": "es5",
+    "prettier.proseWrap": "always",
+    "editor.formatOnSave": false,
+    "explorer.autoReveal": false,
+    "workbench.editor.revealIfOpen": true,
+    "python.formatting.provider": "black",
+    "editor.rulers": [
+        80,
+        88,
+        120
+    ],
+    // Enable per-language
+    "[python]": {
+        "editor.formatOnSave": true,
+    },
+    "[javascript]": {
+        "editor.formatOnSave": true
+    },
+    "[typescript]": {
+        "editor.formatOnSave": true
+    },
+    "[json]": {
+        "editor.formatOnSave": true
+    },
+    "[sql]": {},
+    "extensions.ignoreRecommendations": false,
+    "editor.minimap.enabled": false,
+    "workbench.colorTheme": "Monokai",
+    "vscode_custom_css.imports": [
+        "file:///home/lennart/.vscode/workbench-filetree.css"
+    ],
+    "typescript.disableAutomaticTypeAcquisition": true,
+    "editor.parameterHints.enabled": false,
+    "typescript.tsserver.log": "verbose",
+    "breadcrumbs.enabled": true
 }
