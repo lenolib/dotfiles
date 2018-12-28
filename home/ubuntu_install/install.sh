@@ -55,10 +55,10 @@ sudo dpkg -i google-chrome*.deb
 fi
 
 # [dconf]
-read -p "Load dconf keys? [y/N]: " RESP; if [ "$RESP" == "y" ]; then
+read -p "Load dconf keys [needs to be run without sudo]? [y/N]: " RESP; if [ "$RESP" == "y" ]; then
     while read dkey dvalue; do
         echo "Writing $dkey: $dvalue";
-        dconf write $dkey "$dvalue";
+        dconf write $dkey "$dvalue" || true;
     done < dconf-keys.values
 
     for ddir in `ls dconf_dir_dump`; do
