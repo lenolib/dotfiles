@@ -13,7 +13,7 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTFILE=/home/$USER/.bash_history_nondefault
+HISTFILE=$HOME/.bash_history_nondefault
 HISTSIZE=91000
 HISTFILESIZE=912000
 
@@ -311,9 +311,9 @@ alias lmsr="ls -l --sort=size $lsMB"
 alias xm='xmodmap modmap && exit'
 alias xin='sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Synaptics Finger" 38, 43, 0 && sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Synaptics Area" 1500, 4600, 2400, 0 && sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Synaptics Noise Cancellation" 12, 12 && sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Synaptics Soft Button Areas" 3650, 4826, 0, 2400, 0, 0, 0, 0 && sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Device Accel Profile" 1'
 
-if [ -d $HOME/.homesick ]; then
-    source $HOME/.homesick/repos/homeshick/homeshick.sh
-fi
+#if [ -d $HOME/.homesick ]; then
+    #source $HOME/.homesick/repos/homeshick/homeshick.sh
+#fi
 
 function hostgrep () { cat ~/.ssh/config | grep -P -A1 $1 | grep -A1 $2 | grep -v '\-\-' | tee /dev/fd/2 | grep -v "Host " | awk '{print $2}'; }
 
@@ -325,13 +325,9 @@ function hostgrep () { cat ~/.ssh/config | grep -P -A1 $1 | grep -A1 $2 | grep -
 #fi
 export PATH=$PATH:$HOME/opt/terraform
 export PATH=$PATH:$HOME/.local/bin
-alias vew='source $HOME/.local/bin/virtualenvwrapper.sh'
-source $HOME/.local/bin/virtualenvwrapper_lazy.sh
-
- 
-alias xbl='rfkill unblock all && sleep 1 &&  nmcli con up uuid 1bf224a9-c005-4c6f-ae37-f5134504cc37 && exit'
-alias xwl='nmcli con up id "LiPhoneN" && exit'
-
+#alias vew='source $HOME/.local/bin/virtualenvwrapper.sh'
+#source $HOME/.local/bin/virtualenvwrapper_lazy.sh
+   
 export FZF_CTRL_R_OPTS='--sort'
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 bind '"\C-r": reverse-search-history' 
