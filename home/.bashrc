@@ -327,7 +327,7 @@ export PATH=$PATH:$HOME/opt/terraform
 export PATH=$PATH:$HOME/.local/bin
 #alias vew='source $HOME/.local/bin/virtualenvwrapper.sh'
 #source $HOME/.local/bin/virtualenvwrapper_lazy.sh
-   
+       
 export FZF_CTRL_R_OPTS='--sort'
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 bind '"\C-r": reverse-search-history' 
