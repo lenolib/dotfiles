@@ -9,8 +9,14 @@
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
 
-# append to the history file, don't overwrite it
-shopt -s histappend
+if [ -n "$BASH_VERSION" ]; then
+    # append to the history file, don't overwrite it
+    shopt -s histappend
+
+    # check the window size after each command and, if necessary,
+    # update the values of LINES and COLUMNS.
+    shopt -s checkwinsize
+fi
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTFILE=$HOME/.bash_history_nondefault
@@ -18,10 +24,6 @@ HISTSIZE=91000
 HISTFILESIZE=912000
 
 PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
-
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
@@ -164,6 +166,10 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+if [ -f ~/.git-completion.bash ]; then
+  . ~/.git-completion.bash
+fi
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -171,16 +177,28 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-# Expand aliases by Ctrl+e
-bind '"\C-e": alias-expand-line'
-
 GIT_BRANCH="git rev-parse --abbrev-ref HEAD 2> /dev/null"
 GIT_REMOTE_BRANCH="git rev-parse --symbolic-full-name --abbrev-ref @{u} 2> /dev/null"
 
-PS1="\[\033[0;37m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")\
+if [ -n "$BASH_VERSION" ]; then   
+  # Expand aliases by Ctrl+e
+  bind '"\C-e": alias-expand-line'
+  PS1="\[\033[0;37m\]\342\224\214\342\224\200\$([[ \$? != 0 ]] && echo \"[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200\")\
 [$(if [[ ${EUID} == 0 ]]; then echo '\[\033[0;31m\]\h'; else echo '\[\033[1;33m\]\u\[\033[0;37m\]@\[\033[1;96m\]\h'; fi)\
 \[\033[0;37m\]]\342\224\200[\[\033[1;32m\]\w\[\033[0;37m\]]\342\224\200[\[\033[1;31m\]\$(${GIT_BRANCH})\
 \[\033[0;37m\]->\[\033[1;31m\]\$(${GIT_REMOTE_BRANCH})\[\033[0;37m\]]\342\224\200\$(date +\"%H:%M:%S\")\n\[\033[0;37m\]\342\224\224\342\225\274 \[\033[0m\]"
+fi
+
+if [ -n "$ZSH_VERSION" ]; then
+setopt PROMPT_SUBST
+PROMPT='┌─[%(?.%F{green}√.%F{red}?%?)%f]─[%F{yellow}%n%f@%F{cyan}%m%f]─[%B%F{green}%1~%f%b]─[%F{red}$(git rev-parse --abbrev-ref HEAD 2> /dev/null)->$(git rev-parse --symbolic-full-name --abbrev-ref @{u} 2> /dev/null)%f]-$(date +"%H:%M:%S") 
+└╼ '
+ZSH_DISABLE_COMPFIX="true";
+autoload -Uz compinit; compinit;
+bindkey "^e" _expand_alias;
+bindkey '^u' beginning-of-line
+bindkey '^o' end-of-line
+fi
 
 alias mosh="mosh --server='mosh-server new -l LC_ALL=en_US.UTF-8'"
 alias rednose='nosetests --rednose'
@@ -329,24 +347,26 @@ export PATH=$PATH:$HOME/.local/bin
 #source $HOME/.local/bin/virtualenvwrapper_lazy.sh
        
 export FZF_CTRL_R_OPTS='--sort'
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-bind '"\C-r": reverse-search-history' 
-bind '"\C-n": " \C-e\C-u`__fzf_history__`\e\C-e\e^\er"'
-__fzf_history__() (
-  local line
-  shopt -u nocaseglob nocasematch
-  all_hist=$( HISTTIMEFORMAT= cat --number ~/.bash_history_2016-10-30; history; )
-  line=$(
-    HISTTIMEFORMAT=  echo "$all_hist" |
-    eval "$(__fzfcmd) +s --tac +m -n2..,.. --tiebreak=index --toggle-sort=ctrl-r $FZF_CTRL_R_OPTS" |
-    command grep '^ *[0-9]') &&
-    if [[ $- =~ H ]]; then
-      sed 's/^ *\([0-9]*\)\** *//' <<< "$line"
-      #sed 's/^ *\([0-9]*\)\** .*/!\1/' <<< "$line" 
-    else
-      sed 's/^ *\([0-9]*\)\** *//' <<< "$line"
-    fi
-)
+if [ -n "$BASH_VERSION" ]; then
+    [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+    bind '"\C-r": reverse-search-history' 
+    bind '"\C-n": " \C-e\C-u`__fzf_history__`\e\C-e\e^\er"'
+    __fzf_history__() (
+    local line
+    shopt -u nocaseglob nocasematch
+    all_hist=$( HISTTIMEFORMAT= cat -n ~/.bash_history_2016-10-30; history; )
+    line=$(
+        HISTTIMEFORMAT=  echo "$all_hist" |
+        eval "fzf +s --tac +m -n2..,.. --tiebreak=index --toggle-sort=ctrl-r $FZF_CTRL_R_OPTS" |
+        command grep '^ *[0-9]') &&
+        if [[ $- =~ H ]]; then
+        sed 's/^ *\([0-9]*\)\** *//' <<< "$line"
+        #sed 's/^ *\([0-9]*\)\** .*/!\1/' <<< "$line" 
+        else
+        sed 's/^ *\([0-9]*\)\** *//' <<< "$line"
+        fi
+    )
+fi
 
 if [ -f $HOME/.hub.bash_completion.sh ]; then
   . $HOME/.hub.bash_completion.sh
@@ -367,9 +387,6 @@ fco() {
     fzf-tmux -l30 -- --no-hscroll --ansi +m -d "\t" -n 2) || return
   git checkout $(echo "$target" | awk '{print $2}')
 }
-
-# added by travis gem
-[ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
 
 # https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md
 #NPM_PACKAGES="${HOME}/.npm"

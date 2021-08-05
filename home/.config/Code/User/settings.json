@@ -1,7 +1,6 @@
 {
     "keyboard.dispatch": "keyCode",
     "sublimeTextKeymap.promptV3Features": true,
-    "window.zoomLevel": 0,
     "window.title": "${dirty}${activeEditorLong}${separator}${rootName}${separator}${appName}",
     "prettier.singleQuote": true,
     "prettier.trailingComma": "es5",
@@ -37,6 +36,8 @@
     ],
     "typescript.disableAutomaticTypeAcquisition": true,
     "editor.parameterHints.enabled": false,
-    "typescript.tsserver.log": "verbose",
-    "breadcrumbs.enabled": true
+    "typescript.tsserver.log": "off",
+    "breadcrumbs.enabled": true,
+    "workbench.startupEditor": "none",
+    "window.zoomLevel": 1
 }
