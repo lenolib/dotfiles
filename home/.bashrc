@@ -303,11 +303,46 @@ function stamp () { date -d @$1; }
 
 
 # ls variation aliases
-alias ll='ls -alF'
+alias ll='ls -alFG'
 alias la='ls -A'
 alias lh='ls -lFh'
-alias l='ls -lF'
+alias l='ls -lFG'
 alias lsize='ls -lAhr --sort=size'
+export LSCOLORS=Dxfxcxdxbxegedabagacad;
+
+
+# ls Attribute	Foreground color	Background color
+# directory	e	x
+# symbolic	f	x
+# socket	c	x
+# pipe	d	x
+# executable	b	x
+# block	e	g
+# character	e	d
+# executable	a	b
+# executable	a	g
+# directory	a	c
+# directory	a	d
+# The color and their code values are as follows:
+
+# Code	Meaning (Color)
+# a	Black
+# b	Red
+# c	Green
+# d	Brown
+# e	Blue
+# f	Magenta
+# g	Cyan
+# h	Light grey
+# A	Bold black, usually shows up as dark grey
+# B	Bold red
+# C	Bold green
+# D	Bold brown, usually shows up as yellow
+# E	Bold blue
+# F	Bold magenta
+# G	Bold cyan
+# H	Bold light grey; looks like bright white
+# x	Default foreground or background
 
 # ----------------------------------
 # Display ls filesizes with decimals
@@ -394,7 +429,7 @@ fco() {
 
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/lennart/Downloads/google-cloud-sdk/path.bash.inc' ]; then source '/home/lennart/Downloads/google-cloud-sdk/path.bash.inc'; fi
+if [ -f '/Users/lennart/Downloads/google-cloud-sdk/path.bash.inc' ]; then . '/Users/lennart/Downloads/google-cloud-sdk/path.bash.inc'; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/home/lennart/Downloads/google-cloud-sdk/completion.bash.inc' ]; then source '/home/lennart/Downloads/google-cloud-sdk/completion.bash.inc'; fi
+if [ -f '/Users/lennart/Downloads/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/lennart/Downloads/google-cloud-sdk/completion.bash.inc'; fi
