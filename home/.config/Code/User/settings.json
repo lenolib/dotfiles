@@ -7,7 +7,6 @@
     "prettier.proseWrap": "always",
     "editor.formatOnSave": false,
     "explorer.autoReveal": false,
-    "workbench.editor.revealIfOpen": true,
     "python.formatting.provider": "black",
     "editor.rulers": [
         80,
@@ -23,12 +22,26 @@
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "[typescript]": {
-        "editor.formatOnSave": true
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+            "source.fixAll": true
+          },
     },
+    "[typescriptreact]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+            "source.fixAll": true
+          },
+    },    
     "[json]": {
-        "editor.formatOnSave": true
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "[sql]": {},
+    "[sql]": {
+        "editor.defaultFormatter": "mtxr.sqltools"
+    },
     "extensions.ignoreRecommendations": false,
     "editor.minimap.enabled": false,
     "workbench.colorTheme": "Monokai",
@@ -40,5 +53,14 @@
     "typescript.tsserver.log": "off",
     "breadcrumbs.enabled": true,
     "workbench.startupEditor": "none",
-    "window.zoomLevel": 1
+    "scm.autoReveal": false,
+    "editor.bracketPairColorization.enabled": true,
+    "javascript.suggest.autoImports": false,
+    "javascript.updateImportsOnFileMove.enabled": "never",
+    "extensions.autoUpdate": false,
+    "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "window.zoomLevel": 1,
+    "prettier.requireConfig": true
 }

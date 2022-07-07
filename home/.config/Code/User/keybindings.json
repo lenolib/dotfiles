@@ -330,5 +330,91 @@
         "key": "cmd+f3",
         "command": "-editor.action.nextSelectionMatchFindAction",
         "when": "editorFocus"
+    },
+    {
+        "key": "cmd+enter",
+        "command": "renameFile",
+        "when": "explorerViewletVisible && filesExplorerFocus"
+      },
+      {
+        "key": "enter",
+        "command": "-renameFile",
+        "when": "explorerViewletVisible && filesExplorerFocus"
+      },
+      {
+        "key": "enter",
+        "command": "list.select",
+        "when": "listFocus && !inputFocus"
+    },
+    {
+        "key": "cmd+h",
+        "command": "editor.action.startFindReplaceAction",
+        "when": "editorFocus || editorIsOpen"
+    },
+    {
+        "key": "alt+cmd+f",
+        "command": "-editor.action.startFindReplaceAction",
+        "when": "editorFocus || editorIsOpen"
+    },
+    {
+        "key": "shift+cmd+up",
+        "command": "-workbench.action.terminal.selectToPreviousCommand",
+        "when": "terminalFocus && terminalProcessSupported"
+    },
+    {
+        "key": "shift+cmd+up",
+        "command": "-list.collapseAll",
+        "when": "listFocus && !inputFocus"
+    },
+    {
+        "key": "shift+cmd+up",
+        "command": "-cursorTopSelect",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "shift+cmd+up",
+        "command": "editor.action.insertCursorAbove",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "alt+cmd+up",
+        "command": "-editor.action.insertCursorAbove",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "shift+cmd+down",
+        "command": "editor.action.insertCursorBelow",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "alt+cmd+down",
+        "command": "-editor.action.insertCursorBelow",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "shift+cmd+down",
+        "command": "-workbench.action.terminal.selectToNextCommand",
+        "when": "terminalFocus && terminalProcessSupported"
+    },
+    {
+        "key": "shift+cmd+down",
+        "command": "-cursorBottomSelect",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "shift+cmd+8",
+        "command": "workbench.action.navigateBack"
+    },
+    {
+        "key": "ctrl+-",
+        "command": "-workbench.action.navigateBack"
+    },
+    {
+        "key": "shift+cmd+9",
+        "command": "workbench.action.navigateForward"
+    },
+    {
+        "key": "ctrl+shift+-",
+        "command": "-workbench.action.navigateForward"
     }
 ]

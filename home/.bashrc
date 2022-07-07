@@ -308,7 +308,7 @@ alias la='ls -A'
 alias lh='ls -lFh'
 alias l='ls -lFG'
 alias lsize='ls -lAhr --sort=size'
-export LSCOLORS=Dxfxcxdxbxegedabagacad;
+export LSCOLORS=Exfxcxdxbxegedabagacad;
 
 
 # ls Attribute	Foreground color	Background color
@@ -378,6 +378,7 @@ function hostgrep () { cat ~/.ssh/config | grep -P -A1 $1 | grep -A1 $2 | grep -
 #fi
 export PATH=$PATH:$HOME/opt/terraform
 export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:/usr/local/Cellar/libpq/13.3/bin
 #alias vew='source $HOME/.local/bin/virtualenvwrapper.sh'
 #source $HOME/.local/bin/virtualenvwrapper_lazy.sh
        
@@ -429,7 +430,9 @@ fco() {
 
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/lennart/Downloads/google-cloud-sdk/path.bash.inc' ]; then . '/Users/lennart/Downloads/google-cloud-sdk/path.bash.inc'; fi
+if [ -f "$HOME/Downloads/google-cloud-sdk/path.bash.inc" ];
+then . "$HOME/Downloads/google-cloud-sdk/path.bash.inc"; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/Users/lennart/Downloads/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/lennart/Downloads/google-cloud-sdk/completion.bash.inc'; fi
+if [ -f "$HOME/Downloads/google-cloud-sdk/completion.bash.inc" ];
+then . "$HOME/Downloads/google-cloud-sdk/completion.bash.inc"; fi
