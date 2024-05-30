@@ -378,7 +378,8 @@ function hostgrep () { cat ~/.ssh/config | grep -P -A1 $1 | grep -A1 $2 | grep -
 #fi
 export PATH=$PATH:$HOME/opt/terraform
 export PATH=$PATH:$HOME/.local/bin
-export PATH=$PATH:/usr/local/Cellar/libpq/13.3/bin
+export PATH=$PATH:/usr/local/opt/libpq/bin
+
 #alias vew='source $HOME/.local/bin/virtualenvwrapper.sh'
 #source $HOME/.local/bin/virtualenvwrapper_lazy.sh
        
@@ -436,3 +437,5 @@ then . "$HOME/Downloads/google-cloud-sdk/path.bash.inc"; fi
 # The next line enables shell command completion for gcloud.
 if [ -f "$HOME/Downloads/google-cloud-sdk/completion.bash.inc" ];
 then . "$HOME/Downloads/google-cloud-sdk/completion.bash.inc"; fi
+
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True

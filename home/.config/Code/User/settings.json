@@ -61,6 +61,17 @@
     "[jsonc]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
+    "prettier.requireConfig": true,
+    "explorer.confirmDragAndDrop": false,
+    "vscode-graphql.showExecCodelens": false,
+    "eslint.quiet": true,
+    "javascript.inlayHints.parameterNames.enabled": "literals",
+    "typescript.inlayHints.parameterNames.enabled": "none",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "editor.gotoLocation.multipleDefinitions": "goto",
+    "editor.gotoLocation.multipleDeclarations": "goto",
+    "editor.inlineSuggest.enabled": true,
+    "editor.inlayHints.enabled": "offUnlessPressed",
     "window.zoomLevel": 1,
-    "prettier.requireConfig": true
+    "githubPullRequests.pullBranch": "never"
 }
