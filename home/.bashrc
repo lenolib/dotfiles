@@ -439,3 +439,7 @@ if [ -f "$HOME/Downloads/google-cloud-sdk/completion.bash.inc" ];
 then . "$HOME/Downloads/google-cloud-sdk/completion.bash.inc"; fi
 
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
