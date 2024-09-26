@@ -1,4 +1,9 @@
 {
+    "workbench.colorCustomizations": {
+        "tab.activeBorder": "#ff0000",
+        "tab.unfocusedActiveBorder": "#000000",
+        "tab.activeBackground": "#1a396b"
+    },
     "keyboard.dispatch": "keyCode",
     "sublimeTextKeymap.promptV3Features": true,
     "window.title": "${dirty}${activeEditorLong}${separator}${rootName}${separator}${appName}",
@@ -8,31 +13,39 @@
     "editor.formatOnSave": false,
     "explorer.autoReveal": false,
     "python.formatting.provider": "black",
+    "editor.lineDecorationsWidth": 0,
     "editor.rulers": [
         80,
-        88,
+        93,
         120
     ],
     // Enable per-language
+    "[markdown]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
     "[python]": {
         "editor.formatOnSave": true,
     },
     "[javascript]": {
         "editor.formatOnSave": true,
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "always",
+          },
     },
     "[typescript]": {
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.codeActionsOnSave": {
-            "source.fixAll": true
+            "source.fixAll": "always",
           },
     },
     "[typescriptreact]": {
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.codeActionsOnSave": {
-            "source.fixAll": true
+            "source.fixAll": "always",
           },
     },    
     "[json]": {
@@ -56,7 +69,6 @@
     "scm.autoReveal": false,
     "editor.bracketPairColorization.enabled": true,
     "javascript.suggest.autoImports": false,
-    "javascript.updateImportsOnFileMove.enabled": "never",
     "extensions.autoUpdate": false,
     "[jsonc]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -64,14 +76,37 @@
     "prettier.requireConfig": true,
     "explorer.confirmDragAndDrop": false,
     "vscode-graphql.showExecCodelens": false,
-    "eslint.quiet": true,
     "javascript.inlayHints.parameterNames.enabled": "literals",
     "typescript.inlayHints.parameterNames.enabled": "none",
-    "typescript.updateImportsOnFileMove.enabled": "always",
     "editor.gotoLocation.multipleDefinitions": "goto",
     "editor.gotoLocation.multipleDeclarations": "goto",
     "editor.inlineSuggest.enabled": true,
     "editor.inlayHints.enabled": "offUnlessPressed",
+    "githubPullRequests.pullBranch": "never",
+    "git.autofetch": true,
+    "hediet.vscode-drawio.resizeImages": null,
+    "hediet.vscode-drawio.theme": "Kennedy",
+    "githubPullRequests.fileListLayout": "tree",
+    "coverage-gutters.showRulerCoverage": true,
+    "livePreview.portNumber": 3005,
+    "search.useParentIgnoreFiles": true,
+    "workbench.editor.enablePreview": false,
+    "[typescript][typescriptreact]": {
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit"
+        }
+    },
+    "editor.wordWrap": "on",
+    "[mjml]": {
+        "editor.defaultFormatter": "mjmlio.vscode-mjml"
+    },
+    "mjml.switchOnSeparateFileChange": false,
+    "[css]": {
+        "editor.defaultFormatter": "vscode.css-language-features"
+    },
     "window.zoomLevel": 1,
-    "githubPullRequests.pullBranch": "never"
+    "git.replaceTagsWhenPull": true,
+    "workbench.tree.indent": 28,
+    "diffEditor.hideUnchangedRegions.enabled": true,
+    "diffEditor.ignoreTrimWhitespace": true
 }

@@ -435,5 +435,9 @@
         "key": "alt+\\",
         "command": "-editor.action.inlineSuggest.trigger",
         "when": "config.github.copilot.inlineSuggest.enable && editorTextFocus && !editorHasSelection && !inlineSuggestionsVisible"
+    },
+    {
+        "key": "ctrl+cmd+i",
+        "command": "-workbench.panel.chatSidebar.copilot"
     }
 ]
