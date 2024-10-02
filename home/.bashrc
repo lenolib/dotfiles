@@ -361,22 +361,6 @@ alias lmsr="ls -l --sort=size $lsMB"
 # User-specific and more opinionated settings (delete if undesired or malfunctioning)
 # -----------------------------------------------------------------------------------
 
-alias xm='xmodmap modmap && exit'
-alias xin='sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Synaptics Finger" 38, 43, 0 && sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Synaptics Area" 1500, 4600, 2400, 0 && sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Synaptics Noise Cancellation" 12, 12 && sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Synaptics Soft Button Areas" 3650, 4826, 0, 2400, 0, 0, 0, 0 && sudo xinput set-prop "SynPS/2 Synaptics TouchPad" "Device Accel Profile" 1'
-
-#if [ -d $HOME/.homesick ]; then
-    #source $HOME/.homesick/repos/homeshick/homeshick.sh
-#fi
-
-function hostgrep () { cat ~/.ssh/config | grep -P -A1 $1 | grep -A1 $2 | grep -v '\-\-' | tee /dev/fd/2 | grep -v "Host " | awk '{print $2}'; }
-
-#if [ -f "$HOME/google-cloud-sdk/path.bash.inc" ]; then
-#    # The next line updates PATH for the Google Cloud SDK.
-#    source "$HOME/google-cloud-sdk/path.bash.inc"
-#    # The next line enables bash completion for gcloud.
-#    source "$HOME/google-cloud-sdk/completion.bash.inc"
-#fi
-export PATH=$PATH:$HOME/opt/terraform
 export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:/usr/local/opt/libpq/bin
 
@@ -429,17 +413,17 @@ fco() {
 #NPM_PACKAGES="${HOME}/.npm"
 #PATH="$NPM_PACKAGES/bin:$PATH"
 
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f "$HOME/Downloads/google-cloud-sdk/path.bash.inc" ];
-then . "$HOME/Downloads/google-cloud-sdk/path.bash.inc"; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f "$HOME/Downloads/google-cloud-sdk/completion.bash.inc" ];
-then . "$HOME/Downloads/google-cloud-sdk/completion.bash.inc"; fi
-
-export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+
+if [ -d $HOME/.homesick ]; then
+    source $HOME/.homesick/repos/homeshick/homeshick.sh
+fi
+
+
+export HOMEBREW_PREFIX="/opt/homebrew";
+export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
+export HOMEBREW_REPOSITORY="/opt/homebrew";
+[ -z "${MANPATH-}" ] || export MANPATH=":${MANPATH#:}";
+export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
