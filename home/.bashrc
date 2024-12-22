@@ -67,6 +67,8 @@ function macvendor () {
 }
 alias macv="python -c \"import sh, sys;fin=[ '\t'.join([ x[0], x[1], str( sh.grep( x[1].upper().replace(':','')[:6], '/tmp/oui.txt', _ok_code=[0,1] ) )[7:] ]) for x in [y.split() for y in sys.stdin.readlines() if y.count(':') > 4]]; print('\n'.join(fin).replace('\n\n', '\n'))\""
 
+eval "$(direnv hook bash)"
+
 if [ "$color_prompt" = yes ]; then
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
@@ -170,12 +172,21 @@ if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
 
+
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
+
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion || {
+    # if not found in /usr/local/etc, try the brew --prefix location
+    [ -f "$(brew --prefix)/etc/bash_completion.d/git-completion.bash" ] && \
+        . $(brew --prefix)/etc/bash_completion.d/git-completion.bash
+}
+
 
 GIT_BRANCH="git rev-parse --abbrev-ref HEAD 2> /dev/null"
 GIT_REMOTE_BRANCH="git rev-parse --symbolic-full-name --abbrev-ref @{u} 2> /dev/null"
@@ -274,8 +285,8 @@ NOCOLOR='\033[0m'
 
 # source ~/.bash_alias_completion
 function clrdiff () { colordiff -y -W $(tput cols) "$@" | less -R;}
-#function hgrep () { history | grep -P -- "$1" | grep -P -- "$2" | grep -P -- "$3"; }
-function hgrep () { ( cat --number $HOME/.bash_history_2016-10-30; history; ) | grep -P -- "$1" | grep -P -- "$2" | grep -P -- "$3"; }
+function hgrep () { history | grep -P -- "$1" | grep -P -- "$2" | grep -P -- "$3"; }
+# function hgrep () { ( history; ) | grep -P -- "$1" | grep -P -- "$2" | grep -P -- "$3"; }
 function outdated_reqs () {
   echo "Checking installed outdated modules in $1 ..."
   local modules=$(cat $1 | sed 's/==.*//' | sed -e '{:q;N;s/\n/\|/g;t q}')
@@ -371,11 +382,11 @@ export FZF_CTRL_R_OPTS='--sort'
 if [ -n "$BASH_VERSION" ]; then
     [ -f ~/.fzf.bash ] && source ~/.fzf.bash
     bind '"\C-r": reverse-search-history' 
-    bind '"\C-n": " \C-e\C-u`__fzf_history__`\e\C-e\e^\er"'
+    bind '"\C-n": " \C-e\C-u`__fzf_history__`\e\C-e\e^"'
     __fzf_history__() (
     local line
     shopt -u nocaseglob nocasematch
-    all_hist=$( HISTTIMEFORMAT= cat -n ~/.bash_history_2016-10-30; history; )
+    all_hist=$( HISTTIMEFORMAT= history )
     line=$(
         HISTTIMEFORMAT=  echo "$all_hist" |
         eval "fzf +s --tac +m -n2..,.. --tiebreak=index --toggle-sort=ctrl-r $FZF_CTRL_R_OPTS" |
@@ -413,17 +424,19 @@ fco() {
 #NPM_PACKAGES="${HOME}/.npm"
 #PATH="$NPM_PACKAGES/bin:$PATH"
 
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
 if [ -d $HOME/.homesick ]; then
     source $HOME/.homesick/repos/homeshick/homeshick.sh
 fi
-
 
 export HOMEBREW_PREFIX="/opt/homebrew";
 export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
 export HOMEBREW_REPOSITORY="/opt/homebrew";
 [ -z "${MANPATH-}" ] || export MANPATH=":${MANPATH#:}";
 export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
+
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
